@@ -1,0 +1,77 @@
+---
+title: "地区別人口ピラミッドPDF出力"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(readxl)
+library(pyramid)
+library(here)
+library(stringr)
+library(openxlsx)
+
+# 対象エリア（"inasa" 等に置き換え可）
+area_name <- "hamanaku"
+
+# ファイルパスと出力先をarea_nameで動的に
+file_path <- here::here("data", "processed", paste0(area_name, "_population_combined.xlsx"))
+output_dir <- paste0("C:/Users/pirat/Documents/mikkabi_population_analysis/figures/pyramid/", area_name, "地区")
+dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
+
+# シート一覧取得
+sheets <- excel_sheets(file_path)
+
+# 最新シートの地区名を取得（plot_population_by_area_common.Rと同等）
+latest_sheet <- tail(sheets, 1)
+header_raw <- read_excel(file_path, sheet = latest_sheet, range = "A1:A1000", col_names = FALSE)[[1]]
+header_cleaned <- na.omit(str_trim(header_raw))
+NAMES_area <- header_cleaned[header_cleaned != ""]
+n_areas <- length(NAMES_area)
+
+# シートごとにヘッダー整合性検証
+for (sh in sheets) {
+  hdr <- read_excel(file_path, sheet = sh, range = "A1:A1000", col_names = FALSE)[[1]]
+  hdr_clean <- na.omit(str_trim(hdr))
+  names_area_sh <- hdr_clean[hdr_clean != ""]
+  if (!identical(NAMES_area, names_area_sh)) {
+    stop(sprintf("シート %s の地区名リストが最新シートと一致しません。", sh))
+  }
+}
+message("地区名リスト整合性チェック：OK")
+
+# 使用する地区名をNAMES_areaに統一
+date_strings <- sheets
+
+# 出力対象ループ（地区数に応じて自動設定）
+for (i in seq_len(n_areas) - 1) {
+  for (sheet_name in date_strings) {
+
+    df <- read_excel(file_path, sheet = sheet_name, range = cell_rows( (i*45+2) : (i*45+45) ))
+    colnames(df) <- c("age", "male_raw", "female_raw", "total_raw")
+
+    # 割合計算
+    divisor <- sum(df$total_raw)
+    male <- df$male_raw / divisor * 100
+    female <- df$female_raw / divisor * 100
+
+    # 男女合計100%チェック
+    total_pct <- male + female
+    mismatch_idx <- which(abs(total_pct - 100) > 1e-6)
+    if (length(mismatch_idx) > 0) {
+      bad_ages <- df$age[mismatch_idx]
+      diffs <- total_pct[mismatch_idx] - 100
+      stop(sprintf("男女割合チェック失敗: シート=%s 地区=%s\n%s",
+                   sheet_name, NAMES_area[i+1],
+                   paste(sprintf("年齢階層 %s: 差分 %.6f", bad_ages, diffs), collapse="\n")))
+    }
+
+    # 図の描画（既存のロジックは変更なし）
+    pdf(file = file.path(output_dir, paste0(NAMES_area[i+1], "_", sheet_name, ".pdf")),
+        width = 10, height = 6)
+    pyramid(male, female, labels = df$age,
+            main = paste0(NAMES_area[i + 1], " - ", sheet_name),
+            lxcol = "skyblue", rxcol = "pink")
+    dev.off()
+  }
+}
+message("全処理完了")

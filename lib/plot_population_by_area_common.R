@@ -926,3 +926,82 @@ latest_arate_plot <- function() {
   return(p7)
 }
 
+
+
+
+latest_total <- mat_TOT[analysis_period, ]
+
+df2 <- data.frame(
+  area  = names(latest_total),
+  total = as.numeric(latest_total)
+)
+
+# 先頭の地区を完全に削除（再投入しない）
+if (nrow(df2) >= 1) df2 <- df2[-1, ]
+
+# 不要データの除去（安全策）
+df2 <- df2[!is.na(df2$total), ]
+
+# 並び順：総人口降順
+df2 <- df2[order(-df2$total), ]
+df2$area <- factor(df2$area, levels = df2$area)
+
+# パラメータ（調整可）
+width_std_latest_pop       <- 0.5
+latest_area_label_size_pop <- 5
+expand_x_std_latest_pop    <- expansion(mult = c(0.04, 0.04))
+expand_y_std_latest_pop    <- expansion(mult = c(0.04, 0.04))
+
+latest_total_pop_breaks <- pretty(c(0, max(df2$total, na.rm = TRUE)), n = 6)
+latest_total_pop_limits <- c(0, max(latest_total_pop_breaks))
+
+latest_total_pop_plot <- function() {
+  p8 <- ggplot(df2, aes(x = area, y = total)) +
+    geom_bar(
+      stat = "identity",
+      fill = "#0B318F",
+      colour = 1,
+      linewidth = linewidth_std,
+      width = width_std_latest_pop
+    ) +
+    labs(
+      title = paste0("各町字の人口 ", end_year, "（", base_area, "）"),
+      y = "人口（人）"
+    ) +
+    scale_x_discrete(expand = expand_x_std_latest_pop) +
+    scale_y_continuous(
+      breaks = latest_total_pop_breaks,
+      limits = latest_total_pop_limits,
+      labels = scales::comma,
+      expand = expand_y_std_latest_pop
+    ) +
+    theme_std +
+    theme(axis.text.x = element_text(size = latest_area_label_size_pop))
+  
+  return(p8)
+}
+
+
+latest_total_pie_plot <- function() {
+  df_pie <- within(df2, {
+    share <- total / sum(total, na.rm = TRUE)
+    label <- paste0(area, "\n", scales::percent(share, accuracy = 0.1))
+  })
+  
+  p_pie <- ggplot(df_pie, aes(x = "", y = share, fill = area)) +
+    geom_col(width = 1, colour = 1, linewidth = linewidth_std) +
+    coord_polar(theta = "y") +
+    labs(
+      title = paste0("各町字の人口構成比 ", end_year, "（", base_area, "）"),
+      fill  = "地区"
+    ) +
+    theme_void(base_size = latest_area_label_size_pop) +
+    theme_std +
+    theme(
+      legend.title = element_text(size = latest_area_label_size_pop),
+      legend.text  = element_text(size = latest_area_label_size_pop),
+      plot.title   = element_text(hjust = 0.5)
+    )
+  
+  return(p_pie)
+}

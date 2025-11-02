@@ -1,0 +1,5 @@
+input_excel: "data/processed/mikkabi_population_combined.xlsx"
+sheet_block_rows: 45
+header_col_index: 11
+sheet_year_regex: '(?<!\d)(19|20)\d{2}(?!\d)'
+dataset_name: "mikkabi-population"

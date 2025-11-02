@@ -14,14 +14,14 @@ suppressPackageStartupMessages({
 # 基本操作
 # ----------------------------------------------------------------------
 # ① データ対象（Excelの接頭）を指定： 'mikkabi' / 'hosoe' / 'inasa' など
-area_name <- "inasa"
+area_name <- "miyakoda"
 
 # ② 共通モジュールを読み込み（相対パス）
 source(here::here("lib", "plot_population_by_area_common.R"), encoding = "UTF-8")
 
 # ③ 描画したい地区（町字）を選ぶ
 #    ※ 一覧は plot_population_by_area_common.R 内で読み込まれる NAMES_area を参照
-target_area <- "引佐地区"
+target_area <- "三ヶ日地区"
 
 # ----------------------------------------------------------------------
 # 詳細設定（任意）— 最新年の比較図の見た目（ユーザー要望のまとめ）
@@ -29,7 +29,7 @@ target_area <- "引佐地区"
 width_std_latest       <- 0.5
 latest_area_label_size <- 5
 latest_arate_breaks    <- seq(0, 60, by = 5)
-latest_arate_limits    <- c(0, 61.5)
+latest_arate_limits    <- c(0, 75.0)
 expand_x_std_latest    <- expansion(mult = c(0.04, 0.04))  # X左右余白
 expand_y_std_latest    <- expansion(mult = c(0.04, 0.04))  # Y上下余白
 
@@ -92,7 +92,7 @@ auto_rate_scale <- function(x, step = 5, pad = 1.10, min_limit = 0, max_limit = 
 # ----------------------------------------------------------------------
 # 実行
 # ----------------------------------------------------------------------
-plots <- plot_for_area("引佐地区")
+plots <- plot_for_area("都田地区")
 
 # 必要な図だけ print() してください
 
@@ -110,3 +110,4 @@ print(plots$ratio_dep)       # 従属人口比率
 print(plots$ratio_dep_youth) # 年少人口従属比率
 print(plots$ratio_dep_old)   # 老年人口従属比率
 print(plots$ratio_all)       # 比率まとめ（オーバーレイ）
+

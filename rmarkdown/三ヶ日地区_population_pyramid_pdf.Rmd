@@ -8,8 +8,8 @@ library(readxl)
 library(pyramid)
 knitr::opts_chunk$set(echo = TRUE, fig.width = 10, fig.height = 6, dpi = 300)
 
-file_path <- "C:/Users/pirat/Documents/mikkabi_population_analysis/data/processed/mikkabi_population_combined.xlsx"
-output_dir <- "C:/Users/pirat/Documents/mikkabi_population_analysis/figures/pyramid/三ヶ日地区"
+file_path <- "C:/Users/pirat/Documents/Mikkabi_population_analysis/data/processed/mikkabi_population_combined.xlsx"
+output_dir <- "C:/Users/pirat/Documents/Mikkabi_population_analysis/figures/pyramid/三ヶ日地区"
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 
 age_groups <- c("0~4","5~9","10~14","15~19","20~24","25~29","30~34","35~39","40~44","45~49",
