@@ -1,5 +1,23 @@
+
+
 input_excel: "data/processed/mikkabi_population_combined.xlsx"
+
+# 各地区の人口データが45行単位のブロック構造で並んでいる（1地区 = 45行）
 sheet_block_rows: 45
+
+# 各地区の人口データ地区名の文字は11列目にある。ただし、一部ズレている地区がある。
+# 現在確認されているのは、
+# 新都田四丁目,新都田五丁目：12列目である
 header_col_index: 11
-sheet_year_regex: '(?<!\d)(19|20)\d{2}(?!\d)'
+
+
+# 各ブロックの先頭にある「地区名」が記載されている列番号
+district_name_col_index: 11
+
+# 単独の4桁西暦（1900〜2099）のみを抽出。前後が数字の場合は除外する。
+sheet_year_regex_strict: '(?<!\d)(19|20)\d{2}(?!\d)'
+# 4桁西暦を抽出しつつ、後ろに更に4桁数字が続くケース（例：20052010）も許容する。
+# ただし前方は数字を許さず、後ろは4桁 or 非数字 or 行末を条件とする。
+sheet_year_regex_relaxed: '(?<!\d)(19|20)\d{2}(?=\d{4}(?!\d)|\D|$)'
+
 dataset_name: "mikkabi-population"

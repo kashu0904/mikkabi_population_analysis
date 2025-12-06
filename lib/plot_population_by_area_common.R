@@ -926,9 +926,6 @@ latest_arate_plot <- function() {
   return(p7)
 }
 
-
-
-
 latest_total <- mat_TOT[analysis_period, ]
 
 df2 <- data.frame(
