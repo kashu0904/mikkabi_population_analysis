@@ -73,13 +73,14 @@ def extract_era_year(filename):
 # ===============================================================
 # 年代区分：before / after / old / other
 # ===============================================================
+
 def classify_era(filename):
     era, year = extract_era_year(filename)
 
     if era == "H":
-        if 17 <= year <= 31:
+        if 19 <= year <= 31:
             return "before"   # 行政区再編前（政令市区割時代）
-        elif year <= 16:
+        elif year <= 18:
             return "old"      # 市町村合併前（旧自治体時代）
         else:
             return "other"
@@ -105,14 +106,14 @@ def classify_reorg_after(name):
         return "中央区"
     if "hamanaku" in name_l:
         return "浜名区"
-    if "tenryuku" in name_l:
+    if re.search(r"ten+ryu+ku", name_l):
         return "天竜区"
-
     if "hamamatsushi" in name_l:
         return "浜松市"
 
     return "other"
 
+# 天竜区についてはファイル名の表記が、本来「tenryuku」との表記であるが、「tenryuuku」や「tennryuuku」などのけしからん表記もある。
 
 # ===============================================================
 # 行政区分類（再編前：2005〜2023）
@@ -128,11 +129,11 @@ def classify_reorg_before(name):
         return "西区"
     if "minamiku" in name_l:
         return "南区"
-    if "kitaku" in name_l:
-        return "北区"
     if "hamakitaku" in name_l:
         return "浜北区"
-    if "tenryuku" in name_l:
+    if re.search(r'(?<!hama)kitaku', name_l):
+        return "北区"
+    if re.search(r"ten+ryu+ku", name_l):
         return "天竜区"
 
     if "hamamatsushi" in name_l:
@@ -140,6 +141,8 @@ def classify_reorg_before(name):
 
     return "other"
 
+
+# 天竜区についてはファイル名の表記が、本来「tenryuku」との表記であるが、「tenryuuku」や「tennryuuku」などのけしからん表記もある。
 
 # ===============================================================
 # 市町村合併前（old）の行政区分類
@@ -230,6 +233,13 @@ print(f"総発見Excelファイル数: {len(excel_links)}")
 # ===============================================================
 # ダウンロード件数のカウンタ
 # ===============================================================
+other_files = {
+    "before_other": [],
+    "after_other": [],
+    "old_other": [],
+    "era_other": [],
+}
+
 download_count = {
     "before": {
         "浜松市": 0, "中区": 0, "東区": 0, "西区": 0, "南区": 0,
@@ -246,7 +256,6 @@ download_count = {
     }
 }
 
-
 # ===============================================================
 # ダウンロード処理
 # ===============================================================
@@ -262,10 +271,10 @@ era_to_jp = {
 for link in excel_links:
     filename = os.path.basename(link)
 
-    # ① 年代判定
+    #  年代判定
     era = classify_era(filename)
 
-    # ② 行政区分類
+    #  行政区分類
     if era == "after":
         district = classify_reorg_after(filename)
     elif era == "before":
@@ -276,16 +285,18 @@ for link in excel_links:
         print(f"年度判定不可 → other として保存: {filename}")
         era = "other"
         district = "other"
-
-    # district 判定不可のログ
+        
+    # district = other の場合のみ記録
     if district == "other":
+        other_key = f"{era}_other"   # before_other / after_other / old_other / other_other
+        other_files.setdefault(other_key, []).append(filename)
         print(f"地区名判定不可 → other として保存: {filename}")
 
-    # カウンタ初期化（万一の district 追加にも対応）
+    # カウンタ初期化
     download_count.setdefault(era, {})
     download_count[era].setdefault(district, 0)
     
-    # era の英語識別子 → 日本語フォルダ名 変換マッピング
+    # era の英語識別子 → 日本語フォルダ名
     jp_era = era_to_jp.get(era, "other")
 
     # 保存先ディレクトリ
@@ -295,14 +306,13 @@ for link in excel_links:
     save_path = os.path.join(save_dir, filename)
     print(f"Downloading {filename} → {save_path}")
 
-    # ③ ダウンロード
+    # ダウンロード
     try:
         with requests.get(link, stream=True) as r:
             r.raise_for_status()
             with open(save_path, 'wb') as f:
                 for chunk in r.iter_content(chunk_size=8192):
                     f.write(chunk)
-
         download_count[era][district] += 1
 
     except Exception as e:
@@ -326,4 +336,38 @@ print("\n[市町村合併前(old)]")
 for cat, count in download_count["old"].items():
     print(f"  {cat}: {count}件")
 
+print("\n[年代判定不能（era = other）]")
+for cat, count in download_count["other"].items():
+    print(f"  {cat}: {count}件")
+
 print("-------------------------")
+
+
+# ===============================================================
+# otherとなったファイルのファイル名
+# ===============================================================
+
+print("\n--- other になったファイル一覧 ---")
+
+print("\n[年代判定 other]")
+for fn in other_files["era_other"]:
+    print("  ", fn)
+
+print("\n[再編前 before → district = other]")
+for fn in other_files["before_other"]:
+    print("  ", fn)
+
+print("\n[再編後 after → district = other]")
+for fn in other_files["after_other"]:
+    print("  ", fn)
+
+print("\n[合併前 old → district = other]")
+for fn in other_files["old_other"]:
+    print("  ", fn)
+
+print("\n[年代=other かつ district=other → other_other]")
+for fn in other_files.get("other_other", []):
+    print("  ", fn)
+
+print("------------------------------")
+
