@@ -40,7 +40,6 @@ def to_year(name):
         return 2018 + int(match.group(1))  # 令和R1 = 2019
     return "unknown"
 
-
 # ===============================================================
 # Hxx/Rxx（時代 + 年度）抽出
 # ===============================================================
@@ -68,6 +67,47 @@ def extract_era_year(filename):
         return ("R", int(m.group(1)))
 
     return (None, None)
+
+# ===============================================================
+# 月判定（4月 / 10月） 
+# ===============================================================
+def classify_month(filename):
+    """
+    ファイル名から 4月 / 10月 を判定する。
+
+    ルール:
+    - 「区切り文字（- or _）」に挟まれた 04 / 4 / 10 だけを月とみなす
+      例："-04-" / "_04_" / "-10-" / "_10_"
+    - R04 / H04 など、英字にくっついた 04 は無視される
+    - 判定不能な場合は "other" を返す
+    """
+    name = filename.lower()
+
+    # 全角数字 → 半角数字（念のため）
+    name = name.translate(str.maketrans(
+        "０１２３４５６７８９",
+        "0123456789"
+    ))
+
+    # 4月判定：[-_]0?4[-_]
+    if re.search(r'[-_](0?4)[-_]', name):
+        return 4
+
+    # 10月判定：[-_]10[-_]
+    if re.search(r'[-_]10[-_]', name):
+        return 10
+
+    # どちらでもなければ other
+    return "other"
+
+
+
+# 月 → フォルダ名マッピング
+month_to_folder = {
+    4:       "4月",
+    10:      "10月",
+    "other": "other",
+}
 
 
 # ===============================================================
@@ -113,7 +153,7 @@ def classify_reorg_after(name):
 
     return "other"
 
-# 天竜区についてはファイル名の表記が、本来「tenryuku」との表記であるが、「tenryuuku」や「tennryuuku」などのけしからん表記もある。
+# 天竜区についてはファイル名の表記が、本来「tenryuku」との表記であるが、「tenryuuku」や「tennryuuku」などのけしからん表記揺れもある。
 
 # ===============================================================
 # 行政区分類（再編前：2005〜2023）
@@ -142,7 +182,7 @@ def classify_reorg_before(name):
     return "other"
 
 
-# 天竜区についてはファイル名の表記が、本来「tenryuku」との表記であるが、「tenryuuku」や「tennryuuku」などのけしからん表記もある。
+# 天竜区についてはファイル名の表記が、本来「tenryuku」との表記であるが、「tenryuuku」や「tennryuuku」などのけしからん表記揺れもある。
 
 # ===============================================================
 # 市町村合併前（old）の行政区分類
@@ -256,6 +296,14 @@ download_count = {
     }
 }
 
+# === ここから追加: 月判定 other のログ用 ================================
+month_other_files = {
+    "before": {},
+    "after":  {},
+    "old":    {},
+    "other":  {},
+}
+
 # ===============================================================
 # ダウンロード処理
 # ===============================================================
@@ -292,6 +340,13 @@ for link in excel_links:
         other_files.setdefault(other_key, []).append(filename)
         print(f"地区名判定不可 → other として保存: {filename}")
 
+    month = classify_month(filename)
+    month_folder = month_to_folder.get(month, "other")
+
+    if month == "other":
+        era_dict = month_other_files.setdefault(era, {})
+        era_dict.setdefault(district, []).append(filename)
+
     # カウンタ初期化
     download_count.setdefault(era, {})
     download_count[era].setdefault(district, 0)
@@ -299,8 +354,8 @@ for link in excel_links:
     # era の英語識別子 → 日本語フォルダ名
     jp_era = era_to_jp.get(era, "other")
 
-    # 保存先ディレクトリ
-    save_dir = os.path.join(root_dir, jp_era, district)
+    # 保存先ディレクトリ（月フォルダを追加）
+    save_dir = os.path.join(root_dir, jp_era, district, month_folder)
     os.makedirs(save_dir, exist_ok=True)
 
     save_path = os.path.join(save_dir, filename)
@@ -369,5 +424,15 @@ print("\n[年代=other かつ district=other → other_other]")
 for fn in other_files.get("other_other", []):
     print("  ", fn)
 
-print("------------------------------")
+print("\n--- 4月・10月 判定できなかったファイル（月 = other） ---")
+for era_key, districts in month_other_files.items():
+    if not districts:
+        continue
+    print(f"\nera = {era_key}")
+    for dist, files in districts.items():
+        print(f"  district = {dist}")
+        for fn in files:
+            print("    ", fn)
 
+print("----------------------------------------------------------")
+# === ここまで追加 =====================================================
