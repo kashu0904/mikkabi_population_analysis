@@ -18,6 +18,7 @@ import hashlib
 import json
 import os
 import shutil
+import zipfile
 import re
 import subprocess
 import sys
@@ -389,6 +390,49 @@ def sha256_file(path: str) -> str:
             h.update(chunk)
     return h.hexdigest()
 
+
+def zip_snapshot_folder(snapshot_root: str) -> tuple[str, str]:
+    """スナップショットフォルダを snapshot.zip に固め、snapshot.zip.sha256 を出力する。
+
+    - snapshot_root/snapshot.zip を生成
+    - snapshot_root/snapshot.zip.sha256 を生成（中身: "<sha256>  snapshot.zip"）
+
+    返り値: (zip_path, zip_sha256)
+    """
+    zip_path = os.path.join(snapshot_root, "snapshot.zip")
+    sha_path = zip_path + ".sha256"
+    tmp_zip = zip_path + ".part"
+
+    # 既存があれば作り直す（同名衝突を避ける）
+    for p in (tmp_zip, zip_path, sha_path):
+        try:
+            if os.path.exists(p):
+                os.remove(p)
+        except Exception:
+            pass
+
+    with zipfile.ZipFile(tmp_zip, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+        for root, _dirs, files in os.walk(snapshot_root):
+            for fn in files:
+                full = os.path.join(root, fn)
+                rel = os.path.relpath(full, snapshot_root)
+                # zip 本体/生成途中/sha256 を巻き込まない
+                if rel in ("snapshot.zip", "snapshot.zip.part", "snapshot.zip.sha256"):
+                    continue
+                zf.write(full, arcname=rel)
+
+    os.replace(tmp_zip, zip_path)
+    h = hashlib.sha256()
+    with open(zip_path, "rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    zip_sha = h.hexdigest()
+    with open(sha_path, "w", encoding="utf-8") as f:
+        f.write(f"{zip_sha}  snapshot.zip\n")
+
+    return zip_path, zip_sha
+
+
 def resolve_save_path_on_collision(save_path: str, new_sha256: str) -> str:
     """同一保存先に同名が既に存在する場合の衝突回避。
     - 既存と同一内容（sha256一致）ならそのまま保存先は変えない
@@ -708,6 +752,8 @@ def main() -> None:
                             backoff = max(backoff, int(ra))
                         print(f"RETRY: status={status} attempt={attempt}/{MAX_RETRIES} wait={backoff}s {filename}")
                         time.sleep(backoff)
+                        if attempt == MAX_RETRIES:  # [CHANGED]
+                            raise RuntimeError(f"HTTP status={status}")  # [CHANGED]
                         continue
     
                     # 404等はリトライしても無駄
@@ -883,6 +929,12 @@ def main() -> None:
         meta_path = os.path.join(snapshot_root, "_run_meta.json")
         with open(meta_path, "w", encoding="utf-8") as f:
             json.dump(meta, f, ensure_ascii=False, indent=2)
+
+        # ===============================================================
+        # 追加: snapshot_root を ZIP 凍結（snapshot.zip + snapshot.zip.sha256）
+        # ===============================================================
+        zip_path, zip_sha = zip_snapshot_folder(snapshot_root)
+
     
         # 5) 結果表示
         print("\n--- ダウンロード結果（era -> district） ---")
@@ -893,16 +945,23 @@ def main() -> None:
     
         print("\n--- 出力 ---")
         print(f"snapshot_root: {snapshot_root}")
+        print(f"snapshot_zip: {zip_path}")
+        print(f"snapshot_zip_sha256: {zip_sha}")
         print(f"manifest: {manifest_path}")
         print(f"run_meta: {meta_path}")
     
-        print("\nNOTE: 取得後は data/archive 配下を読み取り専用(ACL)にして凍結してください。")
+        print("\nNOTE: スナップショットは ZIP + sha256 により凍結されました。これから snapshot_root 配下へ attrib +R を適用します。")  # [CHANGED]
+        subprocess.run(f'attrib +R /S /D "{snapshot_root}\\*"', shell=True, check=True)  # [CHANGED]
     
     
 
     except Exception as e:
         print(f"[ERROR] 実行に失敗しました: {e}")
         print(f"[ERROR] 途中生成物を残さないため snapshot を削除します: {snapshot_root}")
+        try:  # [CHANGED]
+            subprocess.run(f'attrib -R /S /D "{snapshot_root}\\*"', shell=True, check=True)  # [CHANGED]
+        except Exception:  # [CHANGED]
+            pass  # [CHANGED]
         try:
             shutil.rmtree(snapshot_root)
         except Exception:

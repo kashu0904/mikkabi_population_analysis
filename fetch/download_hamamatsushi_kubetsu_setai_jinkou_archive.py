@@ -18,6 +18,7 @@ import hashlib
 import json
 import os
 import shutil
+import zipfile
 import re
 import subprocess
 import sys
@@ -114,15 +115,15 @@ MAX_RETRIES = 1
 
 
 # 合併判定（ページ説明に合わせる：平成17年6月末以前は旧浜松市）
-# -> 2005-06 まで = 合併前、2005-07〜2023-12 = 合併後/再編前、2024-01〜 = 合併後/再編後
+# -> 2005-06 まで = 合併前、2005-07〜2023-12 = 再編前、2024-01〜 = 再編後
 MERGER_CUTOFF_YM = (2005, 7)
 
 # 行政区再編（2024-01以降の新3区）に合わせて、合併後をさらに分割
-# -> 2005-07〜2023-12 = 合併後/再編前、2024-01〜 = 合併後/再編後
+# -> 2005-07〜2023-12 = 再編前、2024-01〜 = 再編後
 REORG_CUTOFF_YM = (2024, 1)
 
-# 固定件数（合併前 + 合併後/再編前）
-EXPECTED_FIXED_TOTAL_OLD_BEFORE = 221
+# 固定件数（合併前 + 再編前）
+EXPECTED_FIXED_TOTAL_OLD_BEFORE = 287
 
 
 
@@ -142,6 +143,49 @@ def sha256_file(path: str) -> str:
         for chunk in iter(lambda: f.read(1024 * 1024), b""):
             h.update(chunk)
     return h.hexdigest()
+
+
+
+def zip_snapshot_folder(snapshot_root: str) -> tuple[str, str]:
+    """スナップショットフォルダを snapshot.zip に固め、snapshot.zip.sha256 を出力する。
+
+    - snapshot_root/snapshot.zip を生成
+    - snapshot_root/snapshot.zip.sha256 を生成（中身: "<sha256>  snapshot.zip"）
+
+    返り値: (zip_path, zip_sha256)
+    """
+    zip_path = os.path.join(snapshot_root, "snapshot.zip")
+    sha_path = zip_path + ".sha256"
+    tmp_zip = zip_path + ".part"
+
+    # 既存があれば作り直す（同名衝突を避ける）
+    for p in (tmp_zip, zip_path, sha_path):
+        try:
+            if os.path.exists(p):
+                os.remove(p)
+        except Exception:
+            pass
+
+    with zipfile.ZipFile(tmp_zip, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+        for root, _dirs, files in os.walk(snapshot_root):
+            for fn in files:
+                full = os.path.join(root, fn)
+                rel = os.path.relpath(full, snapshot_root)
+                # zip 本体/生成途中/sha256 を巻き込まない
+                if rel in ("snapshot.zip", "snapshot.zip.part", "snapshot.zip.sha256"):
+                    continue
+                zf.write(full, arcname=rel)
+
+    os.replace(tmp_zip, zip_path)
+    h = hashlib.sha256()
+    with open(zip_path, "rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    zip_sha = h.hexdigest()
+    with open(sha_path, "w", encoding="utf-8") as f:
+        f.write(f"{zip_sha}  snapshot.zip\n")
+
+    return zip_path, zip_sha
 
 
 def resolve_save_path_on_collision(save_path: str, new_sha256: str) -> str:
@@ -249,8 +293,8 @@ def merger_bucket(year: int | None, month: int | None) -> str:
     """保存バケット（フォルダ）を返す。
 
     - 2005-06 まで: 合併前
-    - 2005-07〜2023-12: 合併後/再編前
-    - 2024-01〜: 合併後/再編後
+    - 2005-07〜2023-12: 再編前
+    - 2024-01〜: 再編後
     """
     if year is None:
         return "other"
@@ -263,14 +307,14 @@ def merger_bucket(year: int | None, month: int | None) -> str:
         if year < my:
             return "合併前"
         if year < ry:
-            return "合併後/再編前"
-        return "合併後/再編後"
+            return "再編前"
+        return "再編後"
 
     if (year, month) < (my, mm):
         return "合併前"
     if (year, month) < (ry, rm):
-        return "合併後/再編前"
-    return "合併後/再編後"
+        return "再編前"
+    return "再編後"
 
 def pip_freeze() -> str:
     try:
@@ -396,7 +440,7 @@ def main() -> None:
             "Use a separate 'raw' (working copy) layer for any processing.",
             "",
             "Integrity can be verified by sha256 hashes recorded in _manifest_download.csv.",
-            "Bucket rule: 2005-06 and earlier = 合併前, 2005-07..2023-12 = 合併後/再編前, 2024-01 and later = 合併後/再編後.",
+            "Bucket rule: 2005-06 and earlier = 合併前, 2005-07..2023-12 = 再編前, 2024-01 and later = 再編後.",
             "",
         ]))
     
@@ -439,7 +483,7 @@ def main() -> None:
         # 2) ダウンロード
         manifest_path = os.path.join(snapshot_root, "_manifest_download.csv")
         rows: List[List[str]] = []
-        counts: Dict[str, int] = {"合併前": 0, "合併後/再編前": 0, "合併後/再編後": 0, "other": 0}
+        counts: Dict[str, int] = {"合併前": 0, "再編前": 0, "再編後": 0, "other": 0}
     
         for it in links:
             url = it["url"]
@@ -517,6 +561,8 @@ def main() -> None:
                             backoff = max(backoff, int(ra))
                         print(f"RETRY: status={status} attempt={attempt}/{MAX_RETRIES} wait={backoff}s {filename}")
                         time.sleep(backoff)
+                        if attempt == MAX_RETRIES:  # [CHANGED]
+                            raise RuntimeError(f"HTTP status={status}")  # [CHANGED]
                         continue
     
                     # 404 など：リトライしても無駄
@@ -524,6 +570,7 @@ def main() -> None:
     
                 except Exception as e:
                     if attempt == MAX_RETRIES:
+                        downloaded_at = downloaded_at or started_at.isoformat()  # [CHANGED]
                         rows.append([
                             bucket,
                             "" if year is None else str(year),
@@ -637,32 +684,45 @@ def main() -> None:
         meta_path = os.path.join(snapshot_root, "_run_meta.json")
         with open(meta_path, "w", encoding="utf-8") as f:
             json.dump(meta, f, ensure_ascii=False, indent=2)
+
+        # ===============================================================
+        # 追加: snapshot_root を ZIP 凍結（snapshot.zip + snapshot.zip.sha256）
+        # ===============================================================
+        zip_path, zip_sha = zip_snapshot_folder(snapshot_root)
+
     
         # 5) 結果表示
         print("\n--- ダウンロード結果 ---")
         for k, v in counts.items():
             print(f"{k}: {v}件")
 
-        # 固定件数チェック（合併前 + 合併後/再編前）
-        fixed_total = counts.get("合併前", 0) + counts.get("合併後/再編前", 0)
+        # 固定件数チェック（合併前 + 再編前）
+        fixed_total = counts.get("合併前", 0) + counts.get("再編前", 0)
         if fixed_total != EXPECTED_FIXED_TOTAL_OLD_BEFORE:
-            print(f"\nWARNING: 固定範囲（合併前+合併後/再編前）のダウンロード件数が想定と違います: {fixed_total}件（想定 {EXPECTED_FIXED_TOTAL_OLD_BEFORE}件）")
+            print(f"\nWARNING: 固定範囲（合併前+再編前）のダウンロード件数が想定と違います: {fixed_total}件（想定 {EXPECTED_FIXED_TOTAL_OLD_BEFORE}件）")
     
         if counts.get("other", 0) > 0:
             print("\nWARNING: bucket=other が存在します（年月抽出できない/想定外のファイル名の可能性）。_manifest_download.csv を確認してください。")
     
         print("\n--- 出力 ---")
         print(f"snapshot_root: {snapshot_root}")
+        print(f"snapshot_zip: {zip_path}")
+        print(f"snapshot_zip_sha256: {zip_sha}")
         print(f"manifest: {manifest_path}")
         print(f"run_meta: {meta_path}")
     
-        print("\nNOTE: 取得後は data/archive 配下を読み取り専用(ACL)にして凍結してください。")
+        print("\nNOTE: スナップショットは ZIP + sha256 により凍結されました。これから attrib +R により読み取り専用属性を付与します。")  # [CHANGED]
+        subprocess.run(f'attrib +R /S /D "{snapshot_root}\\*"', shell=True, check=True)  # [CHANGED]
     
     
 
     except Exception as e:
         print(f"[ERROR] 実行に失敗しました: {e}")
         print(f"[ERROR] 途中生成物を残さないため snapshot を削除します: {snapshot_root}")
+        try:  # [CHANGED]
+            subprocess.run(f'attrib -R /S /D "{snapshot_root}\\*"', shell=True, check=True)  # [CHANGED]
+        except Exception:  # [CHANGED]
+            pass  # [CHANGED]
         try:
             shutil.rmtree(snapshot_root)
         except Exception:
