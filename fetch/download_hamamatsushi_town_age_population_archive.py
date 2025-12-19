@@ -3,7 +3,7 @@
 """
 浜松市「町字別・年齢別人口表」ダウンロード（研究用アーカイブ凍結版）
 
-- data/archive/浜松市/町字別・年齢別人口表/snapshots/<timestamp>/ 以下へ保存
+- data/浜松市/町字別・年齢別人口表/archive/snapshots/<timestamp>/ 以下へ保存
 - スナップショット内に以下を同梱
   - _manifest_download.csv（URL/取得日時/ETag/Last-Modified/sha256 等）
   - _run_meta.json（実行メタ、スクリプトsha256、Python/依存など）
@@ -73,7 +73,7 @@ else:
 
 
 # アーカイブ（凍結）ルート
-ARCHIVE_ROOT = os.path.join(PROJECT_ROOT, "data", "archive", "浜松市", DATASET_NAME)
+ARCHIVE_ROOT = os.path.join(PROJECT_ROOT, "data", "浜松市", DATASET_NAME , "archive")
 
 # 取得対象URL（浜松市 年齢別人口表）
 BASE_URLS = [
@@ -476,6 +476,100 @@ def write_text(path: str, content: str) -> None:
     with open(path, "w", encoding="utf-8") as f:
         f.write(content)
 
+
+def _count_errors_from_rows(rows: list[list[str]], status_index: int) -> int:
+    cnt = 0
+    for r in rows:
+        try:
+            s = (r[status_index] or "").strip()
+        except Exception:
+            continue
+        if not s:
+            continue
+        if s != "downloaded":
+            cnt += 1
+    return cnt
+
+
+def _write_status_and_markers(
+    snapshot_root: str,
+    *,
+    result: str,
+    started_at_iso: str,
+    finished_at_iso: str | None,
+    warnings: list[str],
+    errors_count: int,
+    extra: dict | None = None,
+) -> None:
+    """結果を“見た瞬間に分かる形”で残す。"""
+    status = {
+        "result": result,  # OK / WARN / ERROR / FATAL
+        "started_at": started_at_iso,
+        "finished_at": finished_at_iso or "",
+        "warnings_count": len(warnings),
+        "errors_count": int(errors_count),
+    }
+    if extra:
+        status.update(extra)
+
+    # 機械用
+    status_path = os.path.join(snapshot_root, "_STATUS.json")
+    try:
+        with open(status_path, "w", encoding="utf-8") as f:
+            json.dump(status, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
+
+    # 人間用（旗ファイル）
+    if result == "OK":
+        p = os.path.join(snapshot_root, "_SUCCESS.txt")
+        body = "RESULT=OK\nwarnings=0\nerrors=0\n"
+        try:
+            write_text(p, body)
+        except Exception:
+            pass
+    elif result == "WARN":
+        p = os.path.join(snapshot_root, "_WARN.txt")
+        body = "RESULT=WARN\nwarnings>0\nerrors=0\n"
+        try:
+            write_text(p, body)
+        except Exception:
+            pass
+    elif result == "ERROR":
+        p = os.path.join(snapshot_root, "_ERROR.txt")
+        body = f"RESULT=ERROR\nwarnings={len(warnings)}\nerrors={errors_count}\n"
+        try:
+            write_text(p, body)
+        except Exception:
+            pass
+    else:
+        p = os.path.join(snapshot_root, "_FATAL.txt")
+        body = f"RESULT=FATAL\nwarnings={len(warnings)}\nerrors={errors_count}\n"
+        try:
+            write_text(p, body)
+        except Exception:
+            pass
+
+
+def _move_to_failed(snapshot_root: str, archive_root: str, snapshot_id: str) -> str:
+    failed_base = os.path.join(archive_root, "snapshots_failed")
+    ensure_dir(failed_base)
+    failed_root = os.path.join(failed_base, snapshot_id)
+
+    # 既存があれば避ける（基本起きないが保険）
+    if os.path.exists(failed_root):
+        i = 1
+        while os.path.exists(failed_root + f"__{i}"):
+            i += 1
+        failed_root = failed_root + f"__{i}"
+
+    try:
+        shutil.move(snapshot_root, failed_root)
+        return failed_root
+    except Exception:
+        return snapshot_root
+
+
 def _detect_excel_signature(path: str) -> str:
     """ダウンロード後の実体が Excel かを簡易判定する（中身判定）。"""
     try:
@@ -592,11 +686,6 @@ def main() -> None:
                 warn(f"NTP時刻の取得に失敗（{host}）: {e}")
         raise RuntimeError(f"NTP時刻が取得できないため中止します（フォールバック禁止）: {last_err}")
 
-    def now_jst_ref() -> datetime:
-        """厳格モードの参照時刻: NTP必須（NICT→pool）。失敗したら例外で中止。"""
-        dt, _host = _get_ntp_jst()
-        return dt
-
     run_ts, ntp_server_started = _get_ntp_jst()  # 厳格: NTP必須（フォールバック禁止）
     started_at = run_ts
     t0_monotonic = time.monotonic()  # 経過時間計測（補助情報）
@@ -652,13 +741,45 @@ def main() -> None:
         with open(__file__, "r", encoding="utf-8") as f:
             script_text = f.read()
         script_sha = sha256_text(script_text)
-    
-        # 1) リンク収集
+        # 1) リンク収集（＋ source page HTML 保存）
         found: List[Dict[str, str]] = []
-        for page_url in BASE_URLS:
+        source_pages_dir = os.path.join(snapshot_root, "source_pages")
+        ensure_dir(source_pages_dir)
+        source_pages_rows: List[List[str]] = []
+        source_pages_rows.append([
+            "index", "requested_url", "final_url", "saved_html",
+            "status_code", "content_type", "content_length", "date",
+            "last_modified", "etag", "sha256",
+        ])
+        for idx, page_url in enumerate(BASE_URLS, start=1):
             print(f"取得中: {page_url}")
             resp = requests.get(page_url, headers=HEADERS, timeout=TIMEOUT)
             resp.raise_for_status()
+            # source page HTML をそのまま保存（証拠保全）
+            try:
+                html_bytes = resp.content
+                html_sha = hashlib.sha256(html_bytes).hexdigest()
+                html_name = f"{idx:02d}_{sha256_text(page_url)[:12]}.html"
+                html_path = os.path.join(source_pages_dir, html_name)
+                with open(html_path, "wb") as f_html:
+                    f_html.write(html_bytes)
+
+                source_pages_rows.append([
+                    str(idx),
+                    page_url,
+                    resp.url,
+                    os.path.join("source_pages", html_name),
+                    str(resp.status_code),
+                    resp.headers.get("Content-Type", ""),
+                    resp.headers.get("Content-Length", ""),
+                    resp.headers.get("Date", ""),
+                    resp.headers.get("Last-Modified", ""),
+                    resp.headers.get("ETag", ""),
+                    html_sha,
+                ])
+            except Exception:
+                # HTML 保存は補助機能。ここで落ちて収集全体が止まるのは避ける。
+                pass
             resp.encoding = resp.apparent_encoding
             soup = BeautifulSoup(resp.text, "html.parser")
     
@@ -670,6 +791,12 @@ def main() -> None:
                 if extract_excel_filename_from_url(abs_url):
                     found.append({"url": abs_url, "source_page": page_url})
     
+        # source page の一覧を出力（HTML/ヘッダ/sha256）
+        source_pages_csv = os.path.join(snapshot_root, "_source_pages.csv")
+        with open(source_pages_csv, "w", encoding="utf-8", newline="") as f_sp:
+            w = csv.writer(f_sp)
+            w.writerows(source_pages_rows)
+
         # 重複除去
         seen = set()
         links = []
@@ -933,39 +1060,109 @@ def main() -> None:
         # ===============================================================
         # 追加: snapshot_root を ZIP 凍結（snapshot.zip + snapshot.zip.sha256）
         # ===============================================================
+                # ===============================================================
+        # 追加: 結果判定（OK/WARN/ERROR）とステータス出力（必ず残す）
+        # ===============================================================
+        errors_count = _count_errors_from_rows(rows, status_index=14)  # status列
+        if errors_count > 0:
+            result = "ERROR"
+        elif warnings:
+            result = "WARN"
+        else:
+            result = "OK"
+
+        # 成功/警告/失敗を“見た瞬間に分かる形”で残す（必ず出力）
+        _write_status_and_markers(
+            snapshot_root,
+            result=result,
+            started_at_iso=started_at.isoformat(),
+            finished_at_iso=finished_at.isoformat(),
+            warnings=warnings,
+            errors_count=errors_count,
+        )
+
+        # ===============================================================
+        # snapshot_root を ZIP 凍結（snapshot.zip + snapshot.zip.sha256）
+        # - ERROR でも証拠保全として ZIP は作る
+        # - attrib +R は OK/WARN のときだけ（失敗回は再処理・掃除しやすくする）
+        # ===============================================================
         zip_path, zip_sha = zip_snapshot_folder(snapshot_root)
 
-    
-        # 5) 結果表示
-        print("\n--- ダウンロード結果（era -> district） ---")
-        for era_key, d in download_count.items():
-            print(f"\n[{era_key}]")
-            for dist, cnt in sorted(d.items(), key=lambda x: x[0]):
-                print(f"  {dist}: {cnt}件")
-    
-        print("\n--- 出力 ---")
-        print(f"snapshot_root: {snapshot_root}")
-        print(f"snapshot_zip: {zip_path}")
-        print(f"snapshot_zip_sha256: {zip_sha}")
-        print(f"manifest: {manifest_path}")
-        print(f"run_meta: {meta_path}")
-    
-        print("\nNOTE: スナップショットは ZIP + sha256 により凍結されました。これから snapshot_root 配下へ attrib +R を適用します。")  # [CHANGED]
-        subprocess.run(f'attrib +R /S /D "{snapshot_root}\\*"', shell=True, check=True)  # [CHANGED]
+        if result in ("OK", "WARN"):
+            print("\nNOTE: スナップショットは ZIP + sha256 により凍結されました。これから snapshot_root 配下へ attrib +R を適用します。")
+            subprocess.run(f'attrib +R /S /D "{snapshot_root}\\*"', shell=True, check=True)
+        else:
+            warn("結果=ERROR のため attrib +R は適用しません（再処理・掃除を優先）。")
+
+        # ERROR のときは snapshots_failed へ退避して“失敗回”を明確化
+        if result == "ERROR":
+            moved_from = snapshot_root
+            snapshot_root = _move_to_failed(snapshot_root, ARCHIVE_ROOT, snapshot_id)
+            _write_status_and_markers(
+                snapshot_root,
+                result=result,
+                started_at_iso=started_at.isoformat(),
+                finished_at_iso=finished_at.isoformat(),
+                warnings=warnings,
+                errors_count=errors_count,
+                extra={"moved_from": moved_from, "moved_to": snapshot_root},
+            )
+            print(f"\n[ERROR] 一部のダウンロードが失敗したため snapshots_failed に退避しました: {snapshot_root}")
+        elif result == "OK":
+            print("\n[OK] 警告なし・失敗なしで完了しました。")
+        else:
+            print("\n[WARN] 警告はありますが、致命的失敗なく完了しました。")
     
     
 
     except Exception as e:
-        print(f"[ERROR] 実行に失敗しました: {e}")
-        print(f"[ERROR] 途中生成物を残さないため snapshot を削除します: {snapshot_root}")
-        try:  # [CHANGED]
-            subprocess.run(f'attrib -R /S /D "{snapshot_root}\\*"', shell=True, check=True)  # [CHANGED]
-        except Exception:  # [CHANGED]
-            pass  # [CHANGED]
+        # 失敗時に“証拠を消さない”。削除はしない。必ず失敗を明示して退避する。
         try:
-            shutil.rmtree(snapshot_root)
+            warn(f"RUN FAILED: {e}")
         except Exception:
             pass
+
+        try:
+            # WARNINGS.txt（これまでに貯まっていれば）
+            try:
+                if warnings:
+                    warn_path = os.path.join(snapshot_root, "_WARNINGS.txt")
+                    write_text(warn_path, "\n".join(warnings) + "\n")
+            except Exception:
+                pass
+
+            _write_status_and_markers(
+                snapshot_root,
+                result="FATAL",
+                started_at_iso=started_at.isoformat(),
+                finished_at_iso="",
+                warnings=warnings,
+                errors_count=0,
+                extra={"exception": str(e)},
+            )
+
+            # read-only が付いていたら外す（移動/後処理のため）
+            try:
+                subprocess.run(f'attrib -R /S /D "{snapshot_root}\\*"', shell=True, check=True)
+            except Exception:
+                pass
+
+            moved_from = snapshot_root
+            snapshot_root = _move_to_failed(snapshot_root, ARCHIVE_ROOT, snapshot_id)
+
+            _write_status_and_markers(
+                snapshot_root,
+                result="FATAL",
+                started_at_iso=started_at.isoformat(),
+                finished_at_iso="",
+                warnings=warnings,
+                errors_count=0,
+                extra={"exception": str(e), "moved_from": moved_from, "moved_to": snapshot_root},
+            )
+
+            print(f"[FATAL] 実行に失敗しました（削除せず snapshots_failed に退避）: {snapshot_root}")
+        except Exception:
+            print(f"[FATAL] 実行に失敗しました: {e}")
         raise SystemExit(1)
 
 if __name__ == "__main__":
