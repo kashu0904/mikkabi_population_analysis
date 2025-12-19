@@ -1,1 +1,0 @@
-python tools/download_script.py
