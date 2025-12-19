@@ -1,0 +1,3 @@
+RESULT=OK
+warnings=0
+errors=0

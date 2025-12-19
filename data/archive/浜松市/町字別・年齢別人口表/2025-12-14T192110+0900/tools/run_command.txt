@@ -1,1 +1,0 @@
-C:\Users\pirat\AppData\Local\Programs\Python\Python310\python.exe download_hamamatsushi_town_age_population_archive.py
