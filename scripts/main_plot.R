@@ -14,7 +14,7 @@ suppressPackageStartupMessages({
 # 基本操作
 # ----------------------------------------------------------------------
 # ① データ対象（Excelの接頭）を指定： 'mikkabi' / 'hosoe' / 'inasa' など
-area_name <- "shinmiyakoda"
+area_name <- "mikkabi"
 
 # ② 共通モジュールを読み込み（相対パス）
 source(here::here("lib", "plot_population_by_area_common.R"), encoding = "UTF-8")
@@ -92,7 +92,7 @@ auto_rate_scale <- function(x, step = 5, pad = 1.10, min_limit = 0, max_limit = 
 # ----------------------------------------------------------------------
 # 実行
 # ----------------------------------------------------------------------
-plots <- plot_for_area("新都田地区")
+plots <- plot_for_area("三ヶ日地区")
 
 # 必要な図だけ print() してください
 
