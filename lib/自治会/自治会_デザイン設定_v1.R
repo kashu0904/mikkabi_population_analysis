@@ -82,7 +82,7 @@ JICHAIKAI_PLOT_CFG_V1 <- list(
     ),
 
     # 棒の太さ（デフォルト）
-    bar_width = 0.7,
+    bar_width = 0.65,
 
     # 順位の出す側: "right" or "left"
     rank_side = "right",
@@ -130,9 +130,9 @@ JICHAIKAI_PLOT_CFG_V1 <- list(
     #  - name_size : Y軸（自治会名）
     #  - value_size: 値ラベル（世帯・割合）
     #  - rank_size : 順位ラベル
-    name_size  = 3.2,
-    value_size = 2.9,
-    rank_size  = 2.9,
+    name_size  = 3.1,
+    value_size = 2.8,
+    rank_size  = 2.8,
 
     # Y軸（自治会名）
     y_axis_label_face = "bold",
@@ -181,14 +181,17 @@ JICHAIKAI_PLOT_CFG_V1 <- list(
     reverse_levels = TRUE,
 
     # ラベル
-    label_x = 1.15,
-    label_size = 3.6,
-    label_lineheight = 0.95,
+    label_x = 0.77,
+    label_x_01_05 = 0.60,    # 1〜5自治会のとき
+    label_x_06_10 = 0.65,
+    
+    label_size = 4.85,
+    label_lineheight = 0.98,
     label_top_n = 5,      # ★統一：上位5のみ表示
 
     # 区切り線
     slice_border_color = "white",
-    slice_border_lwd = 0.5,
+    slice_border_lwd = 0.4,
 
 
     # 自治会数レンジ別（任意）
@@ -208,7 +211,7 @@ JICHAIKAI_PLOT_CFG_V1 <- list(
 
     # bar のデフォルト書き出しサイズ（インチ）
     bar_w_default = 7,
-    bar_h_default = 7,
+    bar_h_default = 6,
 
     # pie は常に 7x7
     pie_w = 7,
@@ -245,9 +248,9 @@ JICHAIKAI_PLOT_CFG_V1 <- list(
 n01_05 = list(
   id = "n01_05",
   folder = "n01_05__w7h4__bw0.5",
-  bar_width = 0.3,
+  bar_width = 0.28,
   w = 7,
-  h = 4,
+  h = 3,
   name_size = NULL,
   value_size = NULL,
   rank_size = NULL,
@@ -259,9 +262,9 @@ n01_05 = list(
     n06_10 = list(
       id = "n06-10",
       folder = "n06-10__w7h3__bw0.5",
-      bar_width = 0.4,
+      bar_width = 0.38,
       w = 7,
-      h = 5,
+      h = 4,
       name_size = NULL,
       value_size = NULL,
       rank_size = NULL,
@@ -273,9 +276,9 @@ n01_05 = list(
     n11_15 = list(
       id = "n11-15",
       folder = "n11-15__w7h5__bw0.5",
-      bar_width = 0.5,
+      bar_width = 0.45,
       w = 7,
-      h = 6,
+      h = 5,
       name_size = NULL,
       value_size = NULL,
       rank_size = NULL,

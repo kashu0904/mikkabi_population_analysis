@@ -33,7 +33,7 @@ TARGET_YEAR <- 2025
 # 入力CSV（project_root基準の相対パス）
 csv_path <- file.path(project_root, "data", "自治会", as.character(TARGET_YEAR), paste0("自治会世帯数__", TARGET_YEAR, ".csv"))
 # ここを試したい地区名に変える
-TARGET_DISTRICT <- "赤佐地区"
+TARGET_DISTRICT <- "三ヶ日地区"
 
 # ---- 読み込み ----------------------------------------------------------------
 df <- read_or_dummy(csv_path, warn_on_dummy = TRUE)
@@ -84,4 +84,4 @@ p_pie <- plot_pie_share_topN_v1(
 )
 
 print(p_bar)
-#print(p_pie)
+print(p_pie)

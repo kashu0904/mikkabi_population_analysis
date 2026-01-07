@@ -1,8 +1,12 @@
 # =============================================================================
-# 03_run_export_all_一括出力_v1.R
+# 04_run_export_all_一括出力_bar_pie直下_v1.R
 #   - 全地区を 4形式（PDF/PNG/SVG/EPS）で一括書き出し
 #   - 地域フォルダは日本語（例：北地域）
-#   - bar は自治会数レンジ別プロフィール、pie は固定 7×7（ラベル上位5）
+#   - 出力階層を「地域/（bar|pie）」までに簡略化し、図表ファイルは bar/pie 直下へ配置
+#     例）run_root/pdf/北地域/bar/自治会世帯数__三ヶ日地区__bar.pdf
+#         run_root/pdf/北地域/pie/自治会世帯数__三ヶ日地区__pie.pdf
+#   - bar のサイズは「自治会数レンジ別プロフィール」を引き続き適用する（ただしフォルダ分けはしない）
+#   - pie は固定 7×7（ラベル上位5）
 #   - PDF/EPSは embedFonts を必ず試行（失敗しても続行、ログへ記録）
 # =============================================================================
 
@@ -103,9 +107,8 @@ capture_warnings_v1 <- function(expr, log, ctx) {
 TARGET_YEAR <- 2025
 
 # 入力CSV（project_root基準の相対パス）
-#  - ここが存在するなら必ずこれを使う
-#  - 存在しない場合は project_root 配下の相対パスへフォールバック
 csv_path <- file.path(project_root, "data", "自治会", as.character(TARGET_YEAR), paste0("自治会世帯数__", TARGET_YEAR, ".csv"))
+
 # ---- 読み込み ----------------------------------------------------------------
 df <- read_or_dummy(csv_path, warn_on_dummy = TRUE)
 if (!("region_key" %in% names(df))) stop("CSVに region_key 列がありません。", call. = FALSE)
@@ -125,7 +128,9 @@ log <- init_logger_v1(run_root)
 write_gs_info_v1(log)
 
 append_text_v1(log$warnings_txt, paste0("[INFO] run_root=", run_root))
-cfg_log_v1(log, "INFO", "script=03_run_export_all_一括出力_v1.R")
+append_text_v1(log$warnings_txt, "[INFO] export_layout=region/(bar|pie)/file (flat)")
+
+cfg_log_v1(log, "INFO", "script=04_run_export_all_一括出力_bar_pie直下_v1.R")
 cfg_log_v1(log, "INFO", paste0("getwd=", normalizePath(getwd(), winslash = "/", mustWork = TRUE)))
 cfg_log_v1(log, "INFO", paste0("project_root=", project_root))
 
@@ -149,6 +154,159 @@ for (nm in names(cfg_paths)) {
 cfg <- ensure_cfg_defaults_v1(cfg, log)
 validate_cfg_v1(cfg, log)
 
+
+# ---- 04専用：地区並び順（YAML） ---------------------------------------------
+# config/hamamatsu_district_order.yaml を編集することで、地域フォルダ内の地区順（番号）を制御できます。
+# ※district 名はCSVの district 列と完全一致が必要です。
+
+DISTRICT_ORDER_YAML <- file.path(project_root, "config", "hamamatsu_district_order.yaml")
+
+load_district_order_yaml_v1 <- function(path, log) {
+  out <- list(
+    filename = list(pad = 2L, sep = "_"),
+    order_by_region = list()
+  )
+  
+  if (!file.exists(path)) {
+    append_text_v1(log$warnings_txt, paste0("[WARN] district_order_yaml not found: ", path, " (データ出現順で番号付与します)"))
+    return(out)
+  }
+  
+  if (!requireNamespace("yaml", quietly = TRUE)) {
+    stop("パッケージ 'yaml' が必要です。install.packages('yaml') を実行してください。", call. = FALSE)
+  }
+  
+  txt <- readLines(path, warn = FALSE, encoding = "UTF-8")
+  y <- yaml::yaml.load(paste(txt, collapse = "\n"))
+  if (is.null(y)) return(out)
+  
+  # filename settings
+  if (!is.null(y$filename$pad)) out$filename$pad <- as.integer(y$filename$pad)
+  if (!is.null(y$filename$sep)) out$filename$sep <- as.character(y$filename$sep)
+  
+  # order settings
+  if (!is.null(y$order_by_region)) out$order_by_region <- y$order_by_region
+  
+  out
+}
+
+order_districts_v1 <- function(districts_data, rk, order_by_region, log) {
+  districts_data <- as.character(districts_data)
+  districts_data <- districts_data[!is.na(districts_data) & nzchar(trimws(districts_data))]
+  
+  ord <- order_by_region[[rk]]
+  if (is.null(ord)) return(districts_data)
+  
+  ord_vec <- as.character(unlist(ord, use.names = FALSE))
+  ord_vec <- ord_vec[!is.na(ord_vec) & nzchar(trimws(ord_vec))]
+  ord_vec <- ord_vec[!duplicated(ord_vec)]
+  
+  missing_in_data <- setdiff(ord_vec, districts_data)
+  if (length(missing_in_data) > 0) {
+    append_text_v1(log$warnings_txt, paste0("[WARN] district_order_yaml: region_key=", rk, " にデータ不存在の地区があります: ", paste(missing_in_data, collapse = ", ")))
+  }
+  
+  not_in_order <- setdiff(districts_data, ord_vec)
+  if (length(not_in_order) > 0) {
+    append_text_v1(log$warnings_txt, paste0("[WARN] district_order_yaml: region_key=", rk, " にYAML未定義の地区があります（末尾に追加）: ", paste(not_in_order, collapse = ", ")))
+  }
+  
+  c(ord_vec[ord_vec %in% districts_data], not_in_order)
+}
+
+# 読み込み（logger 初期化後に実行）
+district_order_cfg <- load_district_order_yaml_v1(DISTRICT_ORDER_YAML, log)
+district_order_by_region <- district_order_cfg$order_by_region %||% list()
+file_pad <- district_order_cfg$filename$pad %||% 2L
+file_sep <- district_order_cfg$filename$sep %||% "_"
+if (is.na(file_pad) || file_pad < 1) file_pad <- 2L
+if (is.null(file_sep) || !nzchar(file_sep)) file_sep <- "_"
+
+append_text_v1(log$warnings_txt, paste0("[INFO] district_order_yaml=", DISTRICT_ORDER_YAML))
+append_text_v1(log$warnings_txt, paste0("[INFO] numbering_prefix=on pad=", file_pad, " sep='", file_sep, "'"))
+
+
+# ---- 04専用：bar/pie 直下へ保存（フォルダ分けしない） ------------------------
+save_pair_all_formats_bar_pie_flat_v1 <- function(
+    p_bar, p_pie,
+    run_root,
+    region_jp,
+    prefix,
+    bar_profile,
+    cfg,
+    log
+) {
+  formats <- cfg$export$formats
+  
+  # bar/pie サイズ
+  bar_w <- bar_profile$w %||% cfg$export$bar_w_default
+  bar_h <- bar_profile$h %||% cfg$export$bar_h_default
+  pie_w <- cfg$export$pie_w
+  pie_h <- cfg$export$pie_h
+  
+  # pie の仕様は現状維持（メタ情報としてのみ使用）
+  pie_folder <- get_pie_folder_v1(cfg)
+  
+  # manifest
+  t <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
+  
+  for (fmt in formats) {
+    base_fmt_dir <- file.path(run_root, fmt, region_jp)
+    
+    # ★ここが04の要件：bar/pie 直下
+    out_bar_dir <- file.path(base_fmt_dir, "bar")
+    out_pie_dir <- file.path(base_fmt_dir, "pie")
+    
+    dir.create(out_bar_dir, recursive = TRUE, showWarnings = FALSE)
+    dir.create(out_pie_dir, recursive = TRUE, showWarnings = FALSE)
+    
+    bar_path <- file.path(out_bar_dir, paste0(prefix, "__bar.", fmt))
+    pie_path <- file.path(out_pie_dir, paste0(prefix, "__pie.", fmt))
+    
+    ok_bar <- TRUE
+    ok_pie <- TRUE
+    
+    # 1) 保存（失敗しても次形式へ）
+    tryCatch(
+      save_one_plot_v1(p_bar, bar_path, bar_w, bar_h, fmt, cfg),
+      error = function(e) {
+        ok_bar <<- FALSE
+        append_text_v1(log$warnings_txt, paste0("[WARN] save(bar) failed: fmt=", fmt, " path=", bar_path, " msg=", conditionMessage(e)))
+      }
+    )
+    tryCatch(
+      save_one_plot_v1(p_pie, pie_path, pie_w, pie_h, fmt, cfg),
+      error = function(e) {
+        ok_pie <<- FALSE
+        append_text_v1(log$warnings_txt, paste0("[WARN] save(pie) failed: fmt=", fmt, " path=", pie_path, " msg=", conditionMessage(e)))
+      }
+    )
+    
+    # 2) PDF/EPS は embedFonts を必ず試行（失敗しても続行、ログへ記録）
+    if (ok_bar && fmt %in% c("pdf", "eps")) {
+      apply_embedfonts_v1(bar_path, fmt, log, region_jp, prefix, "bar")
+    }
+    if (ok_pie && fmt %in% c("pdf", "eps")) {
+      apply_embedfonts_v1(pie_path, fmt, log, region_jp, prefix, "pie")
+    }
+    
+    # 3) export manifest（bar/pie 両方成功した場合のみ）
+    if (ok_bar && ok_pie) {
+      append_csv_row_v1(
+        path = log$export_csv,
+        header = c("timestamp", "format", "region", "prefix", "type", "profile_or_pie", "path", "w_in", "h_in"),
+        row = c(t, fmt, region_jp, prefix, "bar", bar_profile$folder, bar_path, bar_w, bar_h)
+      )
+      append_csv_row_v1(
+        path = log$export_csv,
+        header = c("timestamp", "format", "region", "prefix", "type", "profile_or_pie", "path", "w_in", "h_in"),
+        row = c(t, fmt, region_jp, prefix, "pie", pie_folder, pie_path, pie_w, pie_h)
+      )
+    }
+  }
+}
+
+
 # ---- ループ -----------------------------------------------------------------
 # 地域順: cfg$region$map の順を優先（存在しないキーは後ろ）
 keys_in_data <- unique(na.omit(df$region_key))
@@ -158,18 +316,20 @@ region_keys <- c(intersect(keys_in_map, keys_in_data), setdiff(keys_in_data, key
 for (rk in region_keys) {
   region_jp <- resolve_region_name_v1(rk, cfg, log)
   df_r <- df |> filter(region_key == rk)
-  districts <- unique(df_r$district)
-  districts <- districts[!is.na(districts)]
-
-  for (d in districts) {
+  districts_data <- unique(df_r$district)
+  districts_data <- districts_data[!is.na(districts_data)]
+  districts <- order_districts_v1(districts_data, rk, district_order_by_region, log)
+  
+  for (i in seq_along(districts)) {
+    d <- districts[[i]]
     # district内の自治会数
     df_d <- df_r |> filter(district == d)
     n_jichikai <- nrow(df_d)
-
+    
     # barプロフィール決定 → cfgへ反映
     bar_profile <- get_bar_profile_v1(n_jichikai, cfg)
     cfg_bar <- apply_bar_profile_to_cfg_v1(cfg, bar_profile)
-
+    
     # 出典（既存準拠）
     caption <- make_source_caption(region_jp, asof_reiwa)
 
@@ -180,31 +340,32 @@ for (rk in region_keys) {
     if (!is.na(pie_lx) && pie_lx > 1.01) {
       cfg_log_v1(log, "ALERT", paste0(ctx, " :: pie_label_x_used が 1.0 を超えています（外側配置になり得ます）。cfg 読み込み失敗/上書きキー欠落を疑ってください。"))
     }
-
+    
     # 描画と書き出し（エラーはログして続行）
     tryCatch({
       capture_warnings_v1({
-        p_bar <- plot_bar_horizontal_desc_v1(
+      p_bar <- plot_bar_horizontal_desc_v1(
         df_r, d,
         n_jichikai = n_jichikai,
         cfg = cfg_bar,
         non_corp_mark = cfg$label$non_corp_mark,
         mark_non_corporate = cfg$label$mark_non_corporate,
         caption = caption
-        )
-
-        p_pie <- plot_pie_share_topN_v1(
+      )
+      
+      p_pie <- plot_pie_share_topN_v1(
         df_r, d,
         n_jichikai = n_jichikai,
         cfg = cfg,
         non_corp_mark = cfg$label$non_corp_mark,
         mark_non_corporate = cfg$label$mark_non_corporate,
         caption = caption
-        )
-
-        prefix <- paste0("自治会世帯数__", safe_filename(d))
-
-        save_pair_all_formats_v1(
+      )
+      
+      num <- sprintf(paste0("%0", file_pad, "d"), i)
+      prefix <- paste0(num, file_sep, "自治会世帯数__", safe_filename(d))
+      
+      save_pair_all_formats_bar_pie_flat_v1(
         p_bar = p_bar,
         p_pie = p_pie,
         run_root = run_root,
@@ -213,8 +374,10 @@ for (rk in region_keys) {
         bar_profile = bar_profile,
         cfg = cfg,
         log = log
-        )
+      )
+
       }, log = log, ctx = ctx)
+      
     }, error = function(e) {
       append_text_v1(log$warnings_txt, paste0("[ERROR] ", region_jp, " / ", d, " :: ", conditionMessage(e)))
     })

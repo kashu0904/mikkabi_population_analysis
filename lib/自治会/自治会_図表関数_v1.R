@@ -481,8 +481,12 @@ plot_pie_share_topN_v1 <- function(
 
   # ラベル位置（自治会数1〜10は任意で上書き）
   label_x_used <- cfg$pie$label_x %||% 1.15
-  if (!is.null(n_jichikai) && n_jichikai <= 10) {
-    label_x_used <- cfg$pie$label_x_01_10 %||% label_x_used
+  if (!is.null(n_jichikai)) {
+    if (n_jichikai <= 5) {
+      label_x_used <- cfg$pie$label_x_01_05 %||% label_x_used
+    } else if (n_jichikai <= 10) {
+      label_x_used <- cfg$pie$label_x_06_10 %||% label_x_used
+    }
   }
 
   ggplot(dfq) +
