@@ -109,7 +109,7 @@ JICHAIKAI_PLOT_CFG_V1 <- list(
     x_axis_line_color = "grey60",
     x_axis_line_size  = 0.2,
     x_axis_tick_color = "grey60",
-    x_axis_tick_size  = 0.2,
+    x_axis_tick_size  = 0.5,
     # 目盛りの長さ（pt）…X/Y共通（ggplot2 の axis.ticks.length）
     axis_tick_length_pt = 3.0,
     x_axis_text_color = "grey40",
@@ -166,7 +166,44 @@ JICHAIKAI_PLOT_CFG_V1 <- list(
     grid_x_minor_lwd   = NULL,
 
     grid_y_color = "white",
-    grid_y_lwd = 0.30
+    grid_y_lwd = 0.30,
+    grid_y_color = "white",
+    grid_y_lwd = 0.30,
+    
+    # ===== バー領域（panel）の外枠 =====
+    
+    panel_frame_color = "grey50",
+    panel_frame_size  = 0.2,
+    
+    # ---- 平均/中央値 参照線（縦線） ------------------------------------------
+    stat_label_value_accuracy = 1,   # {value} の丸め（1=整数表示。小数出したければ 0.1 など）
+    
+    mean_line_show     = TRUE,
+    mean_line_color    = "grey30",
+    mean_line_size     = 0.6,
+    mean_line_linetype = "solid",
+    
+    mean_label_show         = TRUE,
+    mean_label_text         = "平均 {value}",   # {value} を数値に置換
+    mean_label_color        = NULL,             # NULLなら line_color を使う
+    mean_label_size         = 3.0,
+    mean_label_hjust        = 0,
+    mean_label_vjust        = -0.8,
+    mean_label_x_nudge_ratio = 0.01,            # x方向に少し右へ（x幅に対する比率）
+    
+    median_line_show     = TRUE,
+    median_line_color    = "grey30",
+    median_line_size     = 0.6,
+    median_line_linetype = "dashed",
+    
+    median_label_show          = TRUE,
+    median_label_text          = "中央値 {value}",
+    median_label_color         = NULL,
+    median_label_size          = 3.0,
+    median_label_hjust         = 0,
+    median_label_vjust         = -1.8,          # 平均ラベルと被るならここを変える
+    median_label_x_nudge_ratio = 0.01
+    
   ),
 
   # ---------------------------
@@ -234,7 +271,7 @@ JICHAIKAI_PLOT_CFG_V1 <- list(
       id = "default",
       folder = "default__w7h7",
       bar_width = NULL,
-      w = NULL,
+      w = 7.5,
       h = NULL,
       name_size = NULL,
       value_size = NULL,
@@ -242,28 +279,27 @@ JICHAIKAI_PLOT_CFG_V1 <- list(
       x_expand = NULL,
       y_expand = NULL
     ),
-
-
-# 1〜5
-n01_05 = list(
-  id = "n01_05",
-  folder = "n01_05__w7h4__bw0.5",
-  bar_width = 0.28,
-  w = 7,
-  h = 3,
-  name_size = NULL,
-  value_size = NULL,
-  rank_size = NULL,
-  x_expand = NULL,
-  y_expand = c(0.200, 0.200)
-),
+    
+    # 1〜5
+    n01_05 = list(
+      id = "n01_05",
+      folder = "n01_05__w7h4__bw0.5",
+      bar_width = 0.28,
+      w = 7.5,
+      h = 3,
+      name_size = NULL,
+      value_size = NULL,
+      rank_size = NULL,
+      x_expand = NULL,
+      y_expand = c(0.200, 0.200)
+    ),
 
     # 6〜10
     n06_10 = list(
       id = "n06-10",
       folder = "n06-10__w7h3__bw0.5",
       bar_width = 0.38,
-      w = 7,
+      w = 7.5,
       h = 4,
       name_size = NULL,
       value_size = NULL,
@@ -277,7 +313,7 @@ n01_05 = list(
       id = "n11-15",
       folder = "n11-15__w7h5__bw0.5",
       bar_width = 0.45,
-      w = 7,
+      w = 7.5,
       h = 5,
       name_size = NULL,
       value_size = NULL,
@@ -291,7 +327,7 @@ n01_05 = list(
       id = "n50+",
       folder = "n50plus__w7h7__bw0.5__smalltext",
       bar_width = 0.70,
-      w = 7,
+      w = 7.5,
       h = 8,
       name_size  = 1.8,
       value_size = 1.8,

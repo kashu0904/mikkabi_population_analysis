@@ -216,7 +216,11 @@ theme_common_v1 <- function(cfg) {
 
       panel.background = element_rect(fill = cfg$bar$panel_bg %||% "white", color = NA),
       plot.background  = element_rect(fill = "white", color = NA),
-      panel.border     = element_blank(),
+      panel.border = element_rect(
+        fill = NA,
+        color = cfg$bar$panel_frame_color %||% "grey50",
+        linewidth = cfg$bar$panel_frame_size %||% 0.6
+      ),
 
       panel.grid.major.x = element_line(color = cfg$bar$grid_x_color %||% "grey80", linewidth = cfg$bar$grid_x_lwd %||% 0.5),
       panel.grid.major.y = element_line(color = cfg$bar$grid_y_color %||% "grey90", linewidth = cfg$bar$grid_y_lwd %||% 0.5),
@@ -298,7 +302,39 @@ plot_bar_horizontal_desc_v1 <- function(
   # X範囲: ラベルが見切れないように少し広げる
   x_min <- if (identical(rank_side, "left")) min(0, rank_x_left * 1.15) else 0
   x_max <- max(maxv, rank_x_right, value_x_fixed) * 1.02
-
+  
+  # ---- 右側Y軸ticks（ticksのみ・右側文字とは独立） ----------------------------
+  tick_layer <- NULL
+  if (isTRUE(cfg$bar$y_axis_ticks %||% FALSE)) {
+    
+    # x軸右端（scale_x_continuous(expand=...) を考慮）
+    x_expand <- cfg$bar$x_expand %||% c(0, 0)
+    mult_right <- if (length(x_expand) >= 2) x_expand[2] else 0
+    xr <- x_max - x_min
+    x_right <- x_max + xr * mult_right
+    
+    # tick長（pt → データ座標へ概算変換）
+    w_in <- cfg$export$bar_w_default %||% 7
+    tick_len <- xr * ((cfg$bar$axis_tick_length_pt %||% 3.0) / 72) / w_in
+    if (!is.finite(tick_len) || is.na(tick_len) || tick_len <= 0) {
+      tick_len <- xr * 0.008
+    }
+    
+    tick_df <- tibble(jichikai_f = levels(dfq$jichikai_f)) |>
+      mutate(jichikai_f = factor(jichikai_f, levels = levels(dfq$jichikai_f)))
+    
+    tick_layer <- ggplot2::geom_segment(
+      data = tick_df,
+      aes(y = jichikai_f, yend = jichikai_f),
+      x = x_right,
+      xend = x_right + tick_len,  
+      inherit.aes = FALSE,
+      colour = cfg$bar$y_axis_tick_color %||% "grey40",
+      linewidth = cfg$bar$y_axis_tick_size %||% 0.3,
+      lineend = "butt"
+    )
+  }
+  
   # バー枠線
   bar_border_col <- if (is.null(cfg$bar$bar_border_color)) {
     NA
@@ -331,8 +367,84 @@ plot_bar_horizontal_desc_v1 <- function(
   rank_size  <- pick_size(cfg$bar$rank_size, 2.5)
   value_size <- pick_size(cfg$bar$value_size, 3.0)
   name_size  <- pick_size(cfg$bar$name_size, cfg$font$base_size)
+  # ---- 平均/中央値 参照線（縦線）＋ラベル -------------------------------------
+  mean_line_layer <- NULL
+  median_line_layer <- NULL
+  mean_label_layer <- NULL
+  median_label_layer <- NULL
+  
+  x_mean <- mean(dfq$households, na.rm = TRUE)
+  x_median <- median(dfq$households, na.rm = TRUE)
+  
+  # 上側（最大の棒）の行にラベルを載せる（vjustで上に逃がす）
+  y_top <- tail(levels(dfq$jichikai_f), 1)
+  
+  acc <- cfg$bar$stat_label_value_accuracy %||% 1
+  fmt_value <- function(v) scales::comma(v, accuracy = acc)
+  make_lbl <- function(tpl, v) {
+    tpl <- as.character(tpl)
+    gsub("\\{value\\}", fmt_value(v), tpl)
+  }
+  
+  xr <- x_max - x_min
+  if (!is.finite(xr) || is.na(xr) || xr <= 0) xr <- maxv
+  
+  # 平均
+  if (isTRUE(cfg$bar$mean_line_show %||% FALSE) && is.finite(x_mean)) {
+    mean_line_layer <- ggplot2::geom_vline(
+      xintercept = x_mean,
+      color = cfg$bar$mean_line_color %||% "grey30",
+      linewidth = cfg$bar$mean_line_size %||% 0.6,
+      linetype = cfg$bar$mean_line_linetype %||% "solid"
+    )
+    
+    if (isTRUE(cfg$bar$mean_label_show %||% TRUE)) {
+      mean_col <- cfg$bar$mean_label_color %||% (cfg$bar$mean_line_color %||% "grey30")
+      mean_label_layer <- ggplot2::annotate(
+        "text",
+        x = x_mean + xr * (cfg$bar$mean_label_x_nudge_ratio %||% 0.01),
+        y = y_top,
+        label = make_lbl(cfg$bar$mean_label_text %||% "平均 {value}", x_mean),
+        hjust = cfg$bar$mean_label_hjust %||% 0,
+        vjust = cfg$bar$mean_label_vjust %||% -0.8,
+        size = pick_size(cfg$bar$mean_label_size, 3.0),
+        color = mean_col,
+        fontface = cfg$bar$mean_label_face %||% cfg$font$bold_face,
+        family = cfg$font$family
+      )
+    }
+  }
+  
+  # 中央値
+  if (isTRUE(cfg$bar$median_line_show %||% FALSE) && is.finite(x_median)) {
+    median_line_layer <- ggplot2::geom_vline(
+      xintercept = x_median,
+      color = cfg$bar$median_line_color %||% "grey30",
+      linewidth = cfg$bar$median_line_size %||% 0.6,
+      linetype = cfg$bar$median_line_linetype %||% "dashed"
+    )
+    
+    if (isTRUE(cfg$bar$median_label_show %||% TRUE)) {
+      median_col <- cfg$bar$median_label_color %||% (cfg$bar$median_line_color %||% "grey30")
+      median_label_layer <- ggplot2::annotate(
+        "text",
+        x = x_median + xr * (cfg$bar$median_label_x_nudge_ratio %||% 0.01),
+        y = y_top,
+        label = make_lbl(cfg$bar$median_label_text %||% "中央値 {value}", x_median),
+        hjust = cfg$bar$median_label_hjust %||% 0,
+        vjust = cfg$bar$median_label_vjust %||% -1.8,
+        size = pick_size(cfg$bar$median_label_size, 3.0),
+        color = median_col,
+        fontface = cfg$bar$median_label_face %||% cfg$font$bold_face,
+        family = cfg$font$family
+      )
+    }
+  }
+  
 
-  p +
+  p + tick_layer + 
+    mean_line_layer + median_line_layer +
+    mean_label_layer + median_label_layer +
     # 順位
     geom_text(
       aes(x = rank_x, label = paste0(rank)),
