@@ -264,10 +264,11 @@ plot_bar_horizontal_desc_v1 <- function(
 ) {
   dfq <- df |>
     filter(.data$district == district_name) |>
+    mutate(households = readr::parse_number(as.character(.data$households))) |>
     arrange(desc(.data$households)) |>
     mutate(
-      prop = .data$households / sum(.data$households),
-      rank = dplyr::dense_rank(dplyr::desc(.data$households)),
+      prop = .data$households / sum(.data$households, na.rm = TRUE),
+      rank = dplyr::min_rank(dplyr::desc(.data$households)),
       jichikai_show = decorate_non_corp(.data$jichikai_unique, .data$corporate, non_corp_mark, mark_non_corporate)
     )
 
@@ -287,7 +288,8 @@ plot_bar_horizontal_desc_v1 <- function(
 
   # Y順序: 高いものが上に来るように levels を逆にする
   dfq <- dfq |>
-    mutate(jichikai_f = factor(jichikai_show, levels = rev(unique(jichikai_show))))
+    mutate(jichikai_f = factor(jichikai_show, levels = rev(unique(jichikai_show)))) |>
+    mutate(y_pos = as.numeric(jichikai_f))
 
   # ラベル位置
   rank_side <- cfg$bar$rank_side %||% "right"
@@ -302,6 +304,7 @@ plot_bar_horizontal_desc_v1 <- function(
   # X範囲: ラベルが見切れないように少し広げる
   x_min <- if (identical(rank_side, "left")) min(0, rank_x_left * 1.15) else 0
   x_max <- max(maxv, rank_x_right, value_x_fixed) * 1.02
+  message(sprintf("[DEBUG] x_min=%s  x_max=%s  maxv=%s", x_min, x_max, maxv))
   
   # ---- 右側Y軸ticks（ticksのみ・右側文字とは独立） ----------------------------
   tick_layer <- NULL
@@ -320,12 +323,11 @@ plot_bar_horizontal_desc_v1 <- function(
       tick_len <- xr * 0.008
     }
     
-    tick_df <- tibble(jichikai_f = levels(dfq$jichikai_f)) |>
-      mutate(jichikai_f = factor(jichikai_f, levels = levels(dfq$jichikai_f)))
-    
-    tick_layer <- ggplot2::geom_segment(
+    tick_df <- tibble(y_pos = seq_len(nlevels(dfq$jichikai_f)))
+
+tick_layer <- ggplot2::geom_segment(
       data = tick_df,
-      aes(y = jichikai_f, yend = jichikai_f),
+      aes(y = y_pos, yend = y_pos),
       x = x_right,
       xend = x_right + tick_len,  
       inherit.aes = FALSE,
@@ -343,27 +345,23 @@ plot_bar_horizontal_desc_v1 <- function(
   }
 
   # ---- ベース ---------------------------------------------------------------
-  p <- ggplot(dfq, aes(x = households, y = jichikai_f))
+  # ※平均/中央値の線を「バーの下」に敷くため、ここでは geom_col をまだ足さない。
+  p <- ggplot(dfq, aes(x = households, y = y_pos))
 
-  if (identical(cfg$bar$fill_mode, "single")) {
-    p <- p + geom_col(width = cfg$bar$bar_width, fill = cfg$bar$bar_color, colour = bar_border_col, linewidth = cfg$bar$bar_border_size)
-  } else if (identical(cfg$bar$fill_mode, "legacy")) {
+  fill_mode_use <- cfg$bar$fill_mode
+  pal <- NULL
+
+  if (identical(fill_mode_use, "legacy")) {
     dfq <- dfq |>
       mutate(jichikai_color = factor(jichikai_show, levels = unique(jichikai_show)))
-    p <- ggplot(dfq, aes(x = households, y = jichikai_f)) +
-      geom_col(aes(fill = jichikai_color), width = cfg$bar$bar_width, colour = bar_border_col, linewidth = cfg$bar$bar_border_size) +
-      guides(fill = "none")
-  } else {
+  } else if (identical(fill_mode_use, "palette")) {
     dfq <- dfq |>
       mutate(jichikai_color = factor(as.character(jichikai_f), levels = levels(jichikai_f)))
     pal <- make_palette(cfg$bar$bar_palette, nlevels(dfq$jichikai_color))
     names(pal) <- levels(dfq$jichikai_color)
-    p <- ggplot(dfq, aes(x = households, y = jichikai_f)) +
-      geom_col(aes(fill = jichikai_color), width = cfg$bar$bar_width, colour = bar_border_col, linewidth = cfg$bar$bar_border_size) +
-      scale_fill_manual(values = pal, guide = "none")
   }
 
-  # ---- 文字サイズ -----------------------------------------------------------
+  # ---- 文字サイズ ----------------------------------------------------------- -----------------------------------------------------------
   rank_size  <- pick_size(cfg$bar$rank_size, 2.5)
   value_size <- pick_size(cfg$bar$value_size, 3.0)
   name_size  <- pick_size(cfg$bar$name_size, cfg$font$base_size)
@@ -377,10 +375,17 @@ plot_bar_horizontal_desc_v1 <- function(
   x_median <- median(dfq$households, na.rm = TRUE)
   
   # 上側（最大の棒）の行にラベルを載せる（vjustで上に逃がす）
-  y_top <- tail(levels(dfq$jichikai_f), 1)
+  y_min_panel <- 0.5
+  y_max_panel <- nrow(dfq) + 0.5
   
   acc <- cfg$bar$stat_label_value_accuracy %||% 1
-  fmt_value <- function(v) scales::comma(v, accuracy = acc)
+  digits <- cfg$bar$stat_label_digits %||% NULL
+  fmt_value <- function(v) {
+    if (!is.null(digits)) {
+      return(formatC(v, format = "f", digits = digits, big.mark = ","))
+    }
+    scales::comma(v, accuracy = acc)
+  }
   make_lbl <- function(tpl, v) {
     tpl <- as.character(tpl)
     gsub("\\{value\\}", fmt_value(v), tpl)
@@ -388,11 +393,62 @@ plot_bar_horizontal_desc_v1 <- function(
   
   xr <- x_max - x_min
   if (!is.finite(xr) || is.na(xr) || xr <= 0) xr <- maxv
+
+  # ---- バー描画（平均/中央値線より上） ---------------------------------------
+  if (identical(fill_mode_use, "single")) {
+    p <- p +
+      mean_line_layer + median_line_layer +
+      geom_col(
+        width = cfg$bar$bar_width,
+        fill = cfg$bar$bar_color,
+        alpha = cfg$bar$bar_alpha,
+        colour = bar_border_col,
+        linewidth = cfg$bar$bar_border_size
+      )
+  } else if (identical(fill_mode_use, "legacy")) {
+    p <- ggplot(dfq, aes(x = households, y = y_pos)) +
+      mean_line_layer + median_line_layer +
+      geom_col(
+        aes(fill = jichikai_color),
+        width = cfg$bar$bar_width,
+        alpha = cfg$bar$bar_alpha,
+        colour = bar_border_col,
+        linewidth = cfg$bar$bar_border_size
+      ) +
+      guides(fill = "none")
+  } else if (identical(fill_mode_use, "palette")) {
+    p <- ggplot(dfq, aes(x = households, y = y_pos)) +
+      mean_line_layer + median_line_layer +
+      geom_col(
+        aes(fill = jichikai_color),
+        width = cfg$bar$bar_width,
+        alpha = cfg$bar$bar_alpha,
+        colour = bar_border_col,
+        linewidth = cfg$bar$bar_border_size
+      ) +
+      scale_fill_manual(values = pal, guide = "none")
+  } else {
+    p <- p +
+      mean_line_layer + median_line_layer +
+      geom_col(
+        width = cfg$bar$bar_width,
+        fill = cfg$bar$bar_color,
+        alpha = cfg$bar$bar_alpha,
+        colour = bar_border_col,
+        linewidth = cfg$bar$bar_border_size
+      )
+  }
+
+
   
   # 平均
   if (isTRUE(cfg$bar$mean_line_show %||% FALSE) && is.finite(x_mean)) {
-    mean_line_layer <- ggplot2::geom_vline(
-      xintercept = x_mean,
+    mean_ext_top <- cfg$bar$mean_line_extend_top %||% 0
+    mean_line_layer <- ggplot2::geom_segment(
+      inherit.aes = FALSE,
+      x = x_mean, xend = x_mean,
+      y = y_min_panel,
+      yend = y_max_panel + mean_ext_top,
       color = cfg$bar$mean_line_color %||% "grey30",
       linewidth = cfg$bar$mean_line_size %||% 0.6,
       linetype = cfg$bar$mean_line_linetype %||% "solid"
@@ -403,7 +459,7 @@ plot_bar_horizontal_desc_v1 <- function(
       mean_label_layer <- ggplot2::annotate(
         "text",
         x = x_mean + xr * (cfg$bar$mean_label_x_nudge_ratio %||% 0.01),
-        y = y_top,
+        y = y_max_panel + (cfg$bar$mean_label_y_offset %||% 0.15),
         label = make_lbl(cfg$bar$mean_label_text %||% "平均 {value}", x_mean),
         hjust = cfg$bar$mean_label_hjust %||% 0,
         vjust = cfg$bar$mean_label_vjust %||% -0.8,
@@ -417,8 +473,12 @@ plot_bar_horizontal_desc_v1 <- function(
   
   # 中央値
   if (isTRUE(cfg$bar$median_line_show %||% FALSE) && is.finite(x_median)) {
-    median_line_layer <- ggplot2::geom_vline(
-      xintercept = x_median,
+    median_ext_bottom <- cfg$bar$median_line_extend_bottom %||% 0
+    median_line_layer <- ggplot2::geom_segment(
+      inherit.aes = FALSE,
+      x = x_median, xend = x_median,
+      y = y_min_panel - median_ext_bottom,
+      yend = y_max_panel,
       color = cfg$bar$median_line_color %||% "grey30",
       linewidth = cfg$bar$median_line_size %||% 0.6,
       linetype = cfg$bar$median_line_linetype %||% "dashed"
@@ -429,7 +489,7 @@ plot_bar_horizontal_desc_v1 <- function(
       median_label_layer <- ggplot2::annotate(
         "text",
         x = x_median + xr * (cfg$bar$median_label_x_nudge_ratio %||% 0.01),
-        y = y_top,
+        y = y_min_panel - (cfg$bar$median_label_y_offset %||% 0.15),
         label = make_lbl(cfg$bar$median_label_text %||% "中央値 {value}", x_median),
         hjust = cfg$bar$median_label_hjust %||% 0,
         vjust = cfg$bar$median_label_vjust %||% -1.8,
@@ -440,11 +500,42 @@ plot_bar_horizontal_desc_v1 <- function(
       )
     }
   }
+
+  # ---- 変動係数（CV）表示 ---------------------------------------------------
+  cv_label_layer <- NULL
+  if (isTRUE(cfg$bar$cv_show %||% FALSE)) {
+    x_mean2 <- mean(dfq$households, na.rm = TRUE)
+    x_sd2   <- stats::sd(dfq$households, na.rm = TRUE)
+    cv_val  <- if (is.finite(x_mean2) && !is.na(x_mean2) && x_mean2 != 0) x_sd2 / x_mean2 else NA_real_
+
+    if (is.finite(cv_val) && !is.na(cv_val)) {
+      cv_digits <- cfg$bar$cv_label_digits %||% 3
+      cv_txt_tpl <- cfg$bar$cv_label_text %||% "CV {value}"
+      cv_txt <- gsub("\\{value\\}", formatC(cv_val, format = "f", digits = cv_digits), as.character(cv_txt_tpl))
+
+      cv_x <- x_max - xr * (cfg$bar$cv_label_x_nudge_ratio %||% 0.02)
+      cv_y <- y_min_panel - (cfg$bar$cv_label_y_offset %||% 0)
+
+      cv_label_layer <- annotate(
+        "text",
+        x = cv_x,
+        y = cv_y,
+        label = cv_txt,
+        hjust = cfg$bar$cv_label_hjust %||% 1,
+        vjust = cfg$bar$cv_label_vjust %||% 1.2,
+        size  = pick_size(cfg$bar$cv_label_size, 2.8),
+        color = cfg$bar$cv_label_color %||% "grey30",
+        family = cfg$font$family
+      )
+    }
+  }
+
+
   
 
   p + tick_layer + 
-    mean_line_layer + median_line_layer +
     mean_label_layer + median_label_layer +
+    cv_label_layer +
     # 順位
     geom_text(
       aes(x = rank_x, label = paste0(rank)),
@@ -467,7 +558,7 @@ plot_bar_horizontal_desc_v1 <- function(
 
     # 自治会名（左端を揃えるため axis ラベルではなくプロット内に描画）
     geom_text(
-      aes(y = jichikai_f, label = jichikai_show),
+      aes(label = jichikai_show),
       x = name_x,
       hjust = name_hjust,
       fontface = cfg$bar$y_axis_label_face,
@@ -476,21 +567,20 @@ plot_bar_horizontal_desc_v1 <- function(
       family = cfg$font$family
     ) +
     labs(
-      title = paste0(district_name, "（計", n_jichikai, "自治会）：自治会別 世帯数（降順）"),
+      title = paste0(district_name, " 自治会別世帯数（降順）― 全", nrow(dfq), "自治会・計", scales::comma(sum(dfq$households, na.rm = TRUE)), "世帯 ― "),
       x = "世帯数",
       y = NULL,
       caption = caption
     ) +
     scale_x_continuous(
-      limits = c(x_min, x_max),
-      oob = scales::oob_keep,
       expand = expansion(mult = cfg$bar$x_expand),
       minor_breaks = function(x) make_minor_breaks_from_major(x, div = cfg$bar$x_minor_div %||% 2)
     ) +
-    scale_y_discrete(
+    scale_y_continuous(
+      limits = c(0.5, nrow(dfq) + 0.5),
       expand = expansion(mult = (cfg$bar$y_expand %||% c(0.05, 0.04)))
     ) +
-    coord_cartesian(clip = "off") +
+    coord_cartesian(xlim = c(x_min, x_max), clip = "off") +
     theme_common_v1(cfg) +
     theme(
       axis.text.y = element_blank(),

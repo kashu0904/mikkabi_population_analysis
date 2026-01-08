@@ -125,6 +125,8 @@ JICHAIKAI_PLOT_CFG_V1 <- list(
     bar_border_color = "black",
     bar_border_size  = 0.1,
     bar_border_alpha = 1.0,
+    # 棒の透明度（1.0=不透明）。NULL だと ggplot がエラーになるため必ず数値で持つ
+    bar_alpha = 1.0,
 
     # 文字サイズ（デフォルト）
     #  - name_size : Y軸（自治会名）
@@ -177,6 +179,17 @@ JICHAIKAI_PLOT_CFG_V1 <- list(
     
     # ---- 平均/中央値 参照線（縦線） ------------------------------------------
     stat_label_value_accuracy = 1,   # {value} の丸め（1=整数表示。小数出したければ 0.1 など）
+    stat_label_digits = 2,          # {value} を必ず小数点以下2桁で表示（例: 120.00）
+
+    # 変動係数（CV）
+    cv_show = TRUE,
+    cv_label_text = "変動係数（CV） {value}",
+    cv_label_digits = 3,
+    cv_label_color = "grey30",
+    cv_label_size  = NA,
+    cv_label_hjust = 1,
+    cv_label_vjust = 1.2,
+    cv_label_x_nudge_ratio = 0.02,
     
     mean_line_show     = TRUE,
     mean_line_color    = "grey30",
