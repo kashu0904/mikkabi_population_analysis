@@ -264,10 +264,9 @@ plot_bar_horizontal_desc_v1 <- function(
 ) {
   dfq <- df |>
     filter(.data$district == district_name) |>
-    mutate(households = readr::parse_number(as.character(.data$households))) |>
     arrange(desc(.data$households)) |>
     mutate(
-      prop = .data$households / sum(.data$households, na.rm = TRUE),
+      prop = .data$households / sum(.data$households),
       rank = dplyr::min_rank(dplyr::desc(.data$households)),
       jichikai_show = decorate_non_corp(.data$jichikai_unique, .data$corporate, non_corp_mark, mark_non_corporate)
     )
@@ -288,8 +287,7 @@ plot_bar_horizontal_desc_v1 <- function(
 
   # Y順序: 高いものが上に来るように levels を逆にする
   dfq <- dfq |>
-    mutate(jichikai_f = factor(jichikai_show, levels = rev(unique(jichikai_show)))) |>
-    mutate(y_pos = as.numeric(jichikai_f))
+    mutate(jichikai_f = factor(jichikai_show, levels = rev(unique(jichikai_show))))
 
   # ラベル位置
   rank_side <- cfg$bar$rank_side %||% "right"
@@ -304,7 +302,6 @@ plot_bar_horizontal_desc_v1 <- function(
   # X範囲: ラベルが見切れないように少し広げる
   x_min <- if (identical(rank_side, "left")) min(0, rank_x_left * 1.15) else 0
   x_max <- max(maxv, rank_x_right, value_x_fixed) * 1.02
-  message(sprintf("[DEBUG] x_min=%s  x_max=%s  maxv=%s", x_min, x_max, maxv))
   
   # ---- 右側Y軸ticks（ticksのみ・右側文字とは独立） ----------------------------
   tick_layer <- NULL
@@ -323,11 +320,12 @@ plot_bar_horizontal_desc_v1 <- function(
       tick_len <- xr * 0.008
     }
     
-    tick_df <- tibble(y_pos = seq_len(nlevels(dfq$jichikai_f)))
-
-tick_layer <- ggplot2::geom_segment(
+    tick_df <- tibble(jichikai_f = levels(dfq$jichikai_f)) |>
+      mutate(jichikai_f = factor(jichikai_f, levels = levels(dfq$jichikai_f)))
+    
+    tick_layer <- ggplot2::geom_segment(
       data = tick_df,
-      aes(y = y_pos, yend = y_pos),
+      aes(y = jichikai_f, yend = jichikai_f),
       x = x_right,
       xend = x_right + tick_len,  
       inherit.aes = FALSE,
@@ -346,7 +344,7 @@ tick_layer <- ggplot2::geom_segment(
 
   # ---- ベース ---------------------------------------------------------------
   # ※平均/中央値の線を「バーの下」に敷くため、ここでは geom_col をまだ足さない。
-  p <- ggplot(dfq, aes(x = households, y = y_pos))
+  p <- ggplot(dfq, aes(x = households, y = jichikai_f))
 
   fill_mode_use <- cfg$bar$fill_mode
   pal <- NULL
@@ -375,8 +373,7 @@ tick_layer <- ggplot2::geom_segment(
   x_median <- median(dfq$households, na.rm = TRUE)
   
   # 上側（最大の棒）の行にラベルを載せる（vjustで上に逃がす）
-  y_min_panel <- 0.5
-  y_max_panel <- nrow(dfq) + 0.5
+  y_bottom <- head(levels(dfq$jichikai_f), 1)
   
   acc <- cfg$bar$stat_label_value_accuracy %||% 1
   digits <- cfg$bar$stat_label_digits %||% NULL
@@ -406,7 +403,7 @@ tick_layer <- ggplot2::geom_segment(
         linewidth = cfg$bar$bar_border_size
       )
   } else if (identical(fill_mode_use, "legacy")) {
-    p <- ggplot(dfq, aes(x = households, y = y_pos)) +
+    p <- ggplot(dfq, aes(x = households, y = jichikai_f)) +
       mean_line_layer + median_line_layer +
       geom_col(
         aes(fill = jichikai_color),
@@ -417,7 +414,7 @@ tick_layer <- ggplot2::geom_segment(
       ) +
       guides(fill = "none")
   } else if (identical(fill_mode_use, "palette")) {
-    p <- ggplot(dfq, aes(x = households, y = y_pos)) +
+    p <- ggplot(dfq, aes(x = households, y = jichikai_f)) +
       mean_line_layer + median_line_layer +
       geom_col(
         aes(fill = jichikai_color),
@@ -443,12 +440,8 @@ tick_layer <- ggplot2::geom_segment(
   
   # 平均
   if (isTRUE(cfg$bar$mean_line_show %||% FALSE) && is.finite(x_mean)) {
-    mean_ext_top <- cfg$bar$mean_line_extend_top %||% 0
-    mean_line_layer <- ggplot2::geom_segment(
-      inherit.aes = FALSE,
-      x = x_mean, xend = x_mean,
-      y = y_min_panel,
-      yend = y_max_panel + mean_ext_top,
+    mean_line_layer <- ggplot2::geom_vline(
+      xintercept = x_mean,
       color = cfg$bar$mean_line_color %||% "grey30",
       linewidth = cfg$bar$mean_line_size %||% 0.6,
       linetype = cfg$bar$mean_line_linetype %||% "solid"
@@ -459,7 +452,7 @@ tick_layer <- ggplot2::geom_segment(
       mean_label_layer <- ggplot2::annotate(
         "text",
         x = x_mean + xr * (cfg$bar$mean_label_x_nudge_ratio %||% 0.01),
-        y = y_max_panel + (cfg$bar$mean_label_y_offset %||% 0.15),
+        y = y_bottom,
         label = make_lbl(cfg$bar$mean_label_text %||% "平均 {value}", x_mean),
         hjust = cfg$bar$mean_label_hjust %||% 0,
         vjust = cfg$bar$mean_label_vjust %||% -0.8,
@@ -473,12 +466,8 @@ tick_layer <- ggplot2::geom_segment(
   
   # 中央値
   if (isTRUE(cfg$bar$median_line_show %||% FALSE) && is.finite(x_median)) {
-    median_ext_bottom <- cfg$bar$median_line_extend_bottom %||% 0
-    median_line_layer <- ggplot2::geom_segment(
-      inherit.aes = FALSE,
-      x = x_median, xend = x_median,
-      y = y_min_panel - median_ext_bottom,
-      yend = y_max_panel,
+    median_line_layer <- ggplot2::geom_vline(
+      xintercept = x_median,
       color = cfg$bar$median_line_color %||% "grey30",
       linewidth = cfg$bar$median_line_size %||% 0.6,
       linetype = cfg$bar$median_line_linetype %||% "dashed"
@@ -489,7 +478,7 @@ tick_layer <- ggplot2::geom_segment(
       median_label_layer <- ggplot2::annotate(
         "text",
         x = x_median + xr * (cfg$bar$median_label_x_nudge_ratio %||% 0.01),
-        y = y_min_panel - (cfg$bar$median_label_y_offset %||% 0.15),
+        y = y_bottom,
         label = make_lbl(cfg$bar$median_label_text %||% "中央値 {value}", x_median),
         hjust = cfg$bar$median_label_hjust %||% 0,
         vjust = cfg$bar$median_label_vjust %||% -1.8,
@@ -514,7 +503,7 @@ tick_layer <- ggplot2::geom_segment(
       cv_txt <- gsub("\\{value\\}", formatC(cv_val, format = "f", digits = cv_digits), as.character(cv_txt_tpl))
 
       cv_x <- x_max - xr * (cfg$bar$cv_label_x_nudge_ratio %||% 0.02)
-      cv_y <- y_min_panel - (cfg$bar$cv_label_y_offset %||% 0)
+      cv_y <- y_bottom
 
       cv_label_layer <- annotate(
         "text",
@@ -534,6 +523,7 @@ tick_layer <- ggplot2::geom_segment(
   
 
   p + tick_layer + 
+    mean_line_layer + median_line_layer +
     mean_label_layer + median_label_layer +
     cv_label_layer +
     # 順位
@@ -558,7 +548,7 @@ tick_layer <- ggplot2::geom_segment(
 
     # 自治会名（左端を揃えるため axis ラベルではなくプロット内に描画）
     geom_text(
-      aes(label = jichikai_show),
+      aes(y = jichikai_f, label = jichikai_show),
       x = name_x,
       hjust = name_hjust,
       fontface = cfg$bar$y_axis_label_face,
@@ -573,14 +563,15 @@ tick_layer <- ggplot2::geom_segment(
       caption = caption
     ) +
     scale_x_continuous(
+      limits = c(x_min, x_max),
+      oob = scales::oob_keep,
       expand = expansion(mult = cfg$bar$x_expand),
       minor_breaks = function(x) make_minor_breaks_from_major(x, div = cfg$bar$x_minor_div %||% 2)
     ) +
-    scale_y_continuous(
-      limits = c(0.5, nrow(dfq) + 0.5),
+    scale_y_discrete(
       expand = expansion(mult = (cfg$bar$y_expand %||% c(0.05, 0.04)))
     ) +
-    coord_cartesian(xlim = c(x_min, x_max), clip = "off") +
+    coord_cartesian(clip = "off") +
     theme_common_v1(cfg) +
     theme(
       axis.text.y = element_blank(),

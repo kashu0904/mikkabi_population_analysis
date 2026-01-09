@@ -84,4 +84,4 @@ p_pie <- plot_pie_share_topN_v1(
 )
 
 print(p_bar)
-print(p_pie)
+#print(p_pie)
