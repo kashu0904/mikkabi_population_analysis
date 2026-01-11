@@ -17,6 +17,32 @@ suppressPackageStartupMessages({
 
 `%||%` <- function(a, b) if (!is.null(a)) a else b
 
+find_project_root_v1 <- function(start = getwd(), max_up = 10) {
+  start <- normalizePath(start, winslash = "/", mustWork = TRUE)
+  cur <- start
+  for (i in 0:max_up) {
+    if (dir.exists(file.path(cur, "scripts")) && dir.exists(file.path(cur, "lib"))) {
+      return(cur)
+    }
+    parent <- normalizePath(file.path(cur, ".."), winslash = "/", mustWork = TRUE)
+    if (identical(parent, cur)) break
+    cur <- parent
+  }
+  stop("project_root を検出できません（scripts/ と lib/ が見つかりません）。setwd(project_root) してから再実行してください。", call. = FALSE)
+}
+
+if (!exists("PROJECT_ROOT", inherits = TRUE)) {
+  PROJECT_ROOT <- find_project_root_v1()
+}
+
+# 統計計算（母集団/標本）を別ファイルに分離
+stat_path <- file.path(PROJECT_ROOT, "lib", "自治会", "自治会_統計計算_v1.R")
+if (!file.exists(stat_path)) {
+  stop(paste0("統計計算ファイルが見つかりません: ", stat_path), call. = FALSE)
+}
+source(stat_path, encoding = "UTF-8")
+
+
 pick_size <- function(x, fallback) {
   if (is.null(x)) return(fallback)
   if (length(x) == 1 && isTRUE(is.na(x))) return(fallback)
@@ -372,9 +398,17 @@ plot_bar_horizontal_desc_v1 <- function(
   x_mean <- mean(dfq$households, na.rm = TRUE)
   x_median <- median(dfq$households, na.rm = TRUE)
   
-  # 上側（最大の棒）の行にラベルを載せる（vjustで上に逃がす）
+  # 上/下のどちらにラベルを載せるか（cfgで切替）
   y_bottom <- head(levels(dfq$jichikai_f), 1)
-  
+  y_top    <- tail(levels(dfq$jichikai_f), 1)
+
+  pick_anchor_y_v1 <- function(anchor, y_top, y_bottom) {
+    a <- tolower(as.character(anchor %||% "bottom"))
+    if (identical(a, "top")) y_top else y_bottom
+  }
+
+  mean_y   <- pick_anchor_y_v1(cfg$bar$mean_label_anchor %||% "bottom", y_top, y_bottom)
+  median_y <- pick_anchor_y_v1(cfg$bar$median_label_anchor %||% "bottom", y_top, y_bottom)
   acc <- cfg$bar$stat_label_value_accuracy %||% 1
   digits <- cfg$bar$stat_label_digits %||% NULL
   fmt_value <- function(v) {
@@ -390,6 +424,58 @@ plot_bar_horizontal_desc_v1 <- function(
   
   xr <- x_max - x_min
   if (!is.finite(xr) || is.na(xr) || xr <= 0) xr <- maxv
+
+  # 平均
+  if (isTRUE(cfg$bar$mean_line_show %||% FALSE) && is.finite(x_mean)) {
+    mean_line_layer <- ggplot2::geom_vline(
+      xintercept = x_mean,
+      color = cfg$bar$mean_line_color %||% "grey30",
+      linewidth = cfg$bar$mean_line_size %||% 0.6,
+      linetype = cfg$bar$mean_line_linetype %||% "solid"
+    )
+    
+    if (isTRUE(cfg$bar$mean_label_show %||% TRUE)) {
+      mean_col <- cfg$bar$mean_label_color %||% (cfg$bar$mean_line_color %||% "grey30")
+      mean_label_layer <- ggplot2::annotate(
+        "text",
+        x = x_mean + xr * (cfg$bar$mean_label_x_nudge_ratio %||% 0.01),
+        y = mean_y,
+        label = make_lbl(cfg$bar$mean_label_text %||% "平均 {value}", x_mean),
+        hjust = cfg$bar$mean_label_hjust %||% 0,
+        vjust = cfg$bar$mean_label_vjust %||% -0.8,
+        size = pick_size(cfg$bar$mean_label_size, 3.0),
+        color = mean_col,
+        fontface = cfg$bar$mean_label_face %||% cfg$font$bold_face,
+        family = cfg$font$family
+      )
+    }
+  }
+  
+  # 中央値
+  if (isTRUE(cfg$bar$median_line_show %||% FALSE) && is.finite(x_median)) {
+    median_line_layer <- ggplot2::geom_vline(
+      xintercept = x_median,
+      color = cfg$bar$median_line_color %||% "grey30",
+      linewidth = cfg$bar$median_line_size %||% 0.6,
+      linetype = cfg$bar$median_line_linetype %||% "dashed"
+    )
+    
+    if (isTRUE(cfg$bar$median_label_show %||% TRUE)) {
+      median_col <- cfg$bar$median_label_color %||% (cfg$bar$median_line_color %||% "grey30")
+      median_label_layer <- ggplot2::annotate(
+        "text",
+        x = x_median + xr * (cfg$bar$median_label_x_nudge_ratio %||% 0.01),
+        y = median_y,
+        label = make_lbl(cfg$bar$median_label_text %||% "中央値 {value}", x_median),
+        hjust = cfg$bar$median_label_hjust %||% 0,
+        vjust = cfg$bar$median_label_vjust %||% -1.8,
+        size = pick_size(cfg$bar$median_label_size, 3.0),
+        color = median_col,
+        fontface = cfg$bar$median_label_face %||% cfg$font$bold_face,
+        family = cfg$font$family
+      )
+    }
+  }
 
   # ---- バー描画（平均/中央値線より上） ---------------------------------------
   if (identical(fill_mode_use, "single")) {
@@ -438,69 +524,26 @@ plot_bar_horizontal_desc_v1 <- function(
 
 
   
-  # 平均
-  if (isTRUE(cfg$bar$mean_line_show %||% FALSE) && is.finite(x_mean)) {
-    mean_line_layer <- ggplot2::geom_vline(
-      xintercept = x_mean,
-      color = cfg$bar$mean_line_color %||% "grey30",
-      linewidth = cfg$bar$mean_line_size %||% 0.6,
-      linetype = cfg$bar$mean_line_linetype %||% "solid"
-    )
-    
-    if (isTRUE(cfg$bar$mean_label_show %||% TRUE)) {
-      mean_col <- cfg$bar$mean_label_color %||% (cfg$bar$mean_line_color %||% "grey30")
-      mean_label_layer <- ggplot2::annotate(
-        "text",
-        x = x_mean + xr * (cfg$bar$mean_label_x_nudge_ratio %||% 0.01),
-        y = y_bottom,
-        label = make_lbl(cfg$bar$mean_label_text %||% "平均 {value}", x_mean),
-        hjust = cfg$bar$mean_label_hjust %||% 0,
-        vjust = cfg$bar$mean_label_vjust %||% -0.8,
-        size = pick_size(cfg$bar$mean_label_size, 3.0),
-        color = mean_col,
-        fontface = cfg$bar$mean_label_face %||% cfg$font$bold_face,
-        family = cfg$font$family
-      )
-    }
-  }
-  
-  # 中央値
-  if (isTRUE(cfg$bar$median_line_show %||% FALSE) && is.finite(x_median)) {
-    median_line_layer <- ggplot2::geom_vline(
-      xintercept = x_median,
-      color = cfg$bar$median_line_color %||% "grey30",
-      linewidth = cfg$bar$median_line_size %||% 0.6,
-      linetype = cfg$bar$median_line_linetype %||% "dashed"
-    )
-    
-    if (isTRUE(cfg$bar$median_label_show %||% TRUE)) {
-      median_col <- cfg$bar$median_label_color %||% (cfg$bar$median_line_color %||% "grey30")
-      median_label_layer <- ggplot2::annotate(
-        "text",
-        x = x_median + xr * (cfg$bar$median_label_x_nudge_ratio %||% 0.01),
-        y = y_bottom,
-        label = make_lbl(cfg$bar$median_label_text %||% "中央値 {value}", x_median),
-        hjust = cfg$bar$median_label_hjust %||% 0,
-        vjust = cfg$bar$median_label_vjust %||% -1.8,
-        size = pick_size(cfg$bar$median_label_size, 3.0),
-        color = median_col,
-        fontface = cfg$bar$median_label_face %||% cfg$font$bold_face,
-        family = cfg$font$family
-      )
-    }
-  }
-
   # ---- 変動係数（CV）表示 ---------------------------------------------------
   cv_label_layer <- NULL
   if (isTRUE(cfg$bar$cv_show %||% FALSE)) {
-    x_mean2 <- mean(dfq$households, na.rm = TRUE)
-    x_sd2   <- stats::sd(dfq$households, na.rm = TRUE)
-    cv_val  <- if (is.finite(x_mean2) && !is.na(x_mean2) && x_mean2 != 0) x_sd2 / x_mean2 else NA_real_
-
-    if (is.finite(cv_val) && !is.na(cv_val)) {
-      cv_digits <- cfg$bar$cv_label_digits %||% 3
+    cv_val  <- cv_v1(dfq$households, mode = "population", na.rm = TRUE)
+if (is.finite(cv_val) && !is.na(cv_val)) {
+      cv_digits <- cfg$bar$cv_label_digits %||% 2
       cv_txt_tpl <- cfg$bar$cv_label_text %||% "CV {value}"
-      cv_txt <- gsub("\\{value\\}", formatC(cv_val, format = "f", digits = cv_digits), as.character(cv_txt_tpl))
+      cv_txt <- gsub("\\{value\\}", formatC(cv_val*100, format = "f", digits = cv_digits), as.character(cv_txt_tpl))
+
+
+      # ---- 歪度（skewness）を同じ統計ラベル枠に追記 -----------------------------
+      if (isTRUE(cfg$bar$skew_show %||% TRUE)) {
+        skew_val <- skewness_v1(dfq$households, na.rm = TRUE)
+        if (is.finite(skew_val) && !is.na(skew_val)) {
+          skew_digits <- cfg$bar$skew_label_digits %||% 2
+          skew_txt_tpl <- cfg$bar$skew_label_text %||% "歪度 {value}"
+          skew_txt <- gsub("\\{value\\}", formatC(skew_val, format = "f", digits = skew_digits), as.character(skew_txt_tpl))
+          cv_txt <- paste0(cv_txt, "\n", skew_txt)
+        }
+      }
 
       cv_x <- x_max - xr * (cfg$bar$cv_label_x_nudge_ratio %||% 0.02)
       cv_y <- y_bottom
@@ -514,6 +557,7 @@ plot_bar_horizontal_desc_v1 <- function(
         vjust = cfg$bar$cv_label_vjust %||% 1.2,
         size  = pick_size(cfg$bar$cv_label_size, 2.8),
         color = cfg$bar$cv_label_color %||% "grey30",
+        fontface = cfg$bar$cv_label_face %||% "plain",  # ★追加
         family = cfg$font$family
       )
     }
@@ -523,7 +567,6 @@ plot_bar_horizontal_desc_v1 <- function(
   
 
   p + tick_layer + 
-    mean_line_layer + median_line_layer +
     mean_label_layer + median_label_layer +
     cv_label_layer +
     # 順位
@@ -607,7 +650,10 @@ plot_bar_horizontal_desc_v1 <- function(
       axis.title.x = element_text(
         color  = cfg$bar$x_axis_title_color %||% "grey40",
         size   = pick_size(cfg$bar$x_axis_title_size, cfg$font$base_size),
-        family = cfg$font$family
+        family = cfg$font$family,
+        hjust  = cfg$bar$x_axis_title_hjust %||% 0.5,
+        vjust  = cfg$bar$x_axis_title_vjust %||% 0,
+        margin = do.call(margin, as.list(cfg$bar$x_axis_title_margin %||% c(0,0,0,0)))
       ),
       axis.ticks.length = grid::unit(cfg$bar$axis_tick_length_pt %||% 3.0, "pt")
     )}
