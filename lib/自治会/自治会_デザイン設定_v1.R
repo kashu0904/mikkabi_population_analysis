@@ -118,7 +118,7 @@
       # 目盛りの長さ（pt）…X/Y共通（ggplot2 の axis.ticks.length）
       axis_tick_length_pt = 3.0,
       x_axis_text_color = "grey40",
-      x_axis_text_size  = NA,   # NAなら font$base_size を使う
+      x_axis_text_size  = 8,   # NAなら font$base_size を使う
       x_axis_title_color = "grey40",
       x_axis_title_size  = NA,  # NAなら font$base_size を使う
   
@@ -196,7 +196,7 @@
       cv_label_face  = "bold",
       
       cv_label_hjust = 0.0,
-      cv_label_vjust = 2.45,
+      cv_label_vjust = 2.25,
       cv_label_x_nudge_ratio = 0.25,
       
       
@@ -216,7 +216,7 @@
       mean_label_color        = "#D89000",             # NULLなら line_color を使う
       mean_label_size         = 3.0,
       mean_label_hjust        = 0,
-      mean_label_vjust        = 6.5,
+      mean_label_vjust        = 6.3,
       mean_label_x_nudge_ratio = 0.00,            # x方向に少し右へ（x幅に対する比率）
       
       median_line_show     = TRUE,
@@ -230,7 +230,7 @@
       median_label_color         = "#0072B2",
       median_label_size          = 3.0,
       median_label_hjust         = 0,
-      median_label_vjust         = 5.0,          # 平均ラベルと被るならここを変える
+      median_label_vjust         = 4.7,          # 平均ラベルと被るならここを変える
       median_label_x_nudge_ratio = 0.00
       
     ),
@@ -301,7 +301,7 @@
         folder = "default__w7h7",
         bar_width = NULL,
         w = 7.5,
-        h = NULL,
+        h = 6.0,
         name_size = NULL,
         value_size = NULL,
         rank_size = NULL,
@@ -313,35 +313,30 @@
       n01_05 = list(
         id = "n01_05",
         folder = "n01_05__w7h4__bw0.5",
-        bar_width = 0.28,
+        bar_width = 0.55,
         w = 7.5,
-        h = 3,
+        h = 6.0,
         name_size = NULL,
         value_size = NULL,
         rank_size = NULL,
         x_expand = NULL,
-        y_expand = c(0.200, 0.200),
-        # --- ★追加：統計ラベル vjust（必要なものだけ入れる） ---
-        cv_label_vjust     = 1.0,
-        mean_label_vjust   = 0.8,
-        median_label_vjust = 0.6,
-        
-        # --- ★追加：layout 上書き（必要なものだけ入れる） ---
+        y_expand = c(4.000, 0.300),
+        cv_label_vjust     = 13.40,
+        mean_label_vjust   = 39.0,
+        median_label_vjust = 37.5,
         layout = list(
           margin = c(15, 25, 15, 50),
           plot_margin = c(15, 20, 10, 50),
+          x_axis_title_margin = c(0, 0, 0, 0),
+          x_axis_title_vjust = -1,
+          x_axis_title_hjust = 0.0,
           caption_hjust = 1,
           caption_size_ratio = 0.65,
           caption_color = "grey30",
           caption_vjust = 0,
           caption_position = "plot",
-          caption_margin = c(20, -10, 0, 0),
-          
-          # ここに書きたい気持ちは分かるが、現行システムでは x_axis_title_* は cfg$bar 側
-          # （下の apply で cfg$bar に流し込むようにする）
-          x_axis_title_margin = c(0, 0, 0, 0),
-          x_axis_title_vjust  = -1,
-          x_axis_title_hjust  = 0.0
+          caption_margin = c(20, -10, 0, 0)
+        )
       ),
   
       # 6〜10
@@ -356,27 +351,22 @@
         rank_size = NULL,
         x_expand = NULL,
         y_expand = c(0.100, 0.100),
-        # --- ★追加：統計ラベル vjust（必要なものだけ入れる） ---
-        cv_label_vjust     = 1.0,
-        mean_label_vjust   = 0.8,
-        median_label_vjust = 0.6,
-        
-        # --- ★追加：layout 上書き（必要なものだけ入れる） ---
+        cv_label_vjust     = 2.45,
+        mean_label_vjust   = 6.5,
+        median_label_vjust = 5.0,
         layout = list(
           margin = c(15, 25, 15, 50),
           plot_margin = c(15, 20, 10, 50),
+          x_axis_title_margin = c(0, 0, 0, 0),
+          x_axis_title_vjust = -1,
+          x_axis_title_hjust = 0.0,
           caption_hjust = 1,
           caption_size_ratio = 0.65,
           caption_color = "grey30",
           caption_vjust = 0,
           caption_position = "plot",
-          caption_margin = c(20, -10, 0, 0),
-          
-          # ここに書きたい気持ちは分かるが、現行システムでは x_axis_title_* は cfg$bar 側
-          # （下の apply で cfg$bar に流し込むようにする）
-          x_axis_title_margin = c(0, 0, 0, 0),
-          x_axis_title_vjust  = -1,
-          x_axis_title_hjust  = 0.0
+          caption_margin = c(20, -10, 0, 0)
+        )
       ),
   
       # 11〜15
@@ -391,27 +381,22 @@
         rank_size = NULL,
         x_expand = NULL,
         y_expand = c(0.050, 0.050),
-        # --- ★追加：統計ラベル vjust（必要なものだけ入れる） ---
-        cv_label_vjust     = 1.0,
-        mean_label_vjust   = 0.8,
-        median_label_vjust = 0.6,
-        
-        # --- ★追加：layout 上書き（必要なものだけ入れる） ---
+        cv_label_vjust     = 2.45,
+        mean_label_vjust   = 6.7,
+        median_label_vjust = 5.3,
         layout = list(
           margin = c(15, 25, 15, 50),
-          plot_margin = c(15, 20, 10, 50),
+          plot_margin = c(15, 20, 20, 50),
+          x_axis_title_margin = c(0, 0, 0, 0),
+          x_axis_title_vjust = -1,
+          x_axis_title_hjust = 0.0,
           caption_hjust = 1,
           caption_size_ratio = 0.65,
           caption_color = "grey30",
           caption_vjust = 0,
           caption_position = "plot",
-          caption_margin = c(20, -10, 0, 0),
-          
-          # ここに書きたい気持ちは分かるが、現行システムでは x_axis_title_* は cfg$bar 側
-          # （下の apply で cfg$bar に流し込むようにする）
-          x_axis_title_margin = c(0, 0, 0, 0),
-          x_axis_title_vjust  = -1,
-          x_axis_title_hjust  = 0.0
+          caption_margin = c(20, -10, -12, 0)
+        )
       ),
   
       # 50以上
@@ -426,27 +411,22 @@
         rank_size  = 1.8,
         x_expand = NULL,
         y_expand = c(0.0125, 0.015),
-        # --- ★追加：統計ラベル vjust（必要なものだけ入れる） ---
-        cv_label_vjust     = 1.0,
-        mean_label_vjust   = 0.8,
-        median_label_vjust = 0.6,
-        
-        # --- ★追加：layout 上書き（必要なものだけ入れる） ---
+        cv_label_vjust     = 2.45,
+        mean_label_vjust   = 6.5,
+        median_label_vjust = 5.0,
         layout = list(
           margin = c(15, 25, 15, 50),
           plot_margin = c(15, 20, 10, 50),
+          x_axis_title_margin = c(0, 0, 0, 0),
+          x_axis_title_vjust = -1,
+          x_axis_title_hjust = 0.0,
           caption_hjust = 1,
           caption_size_ratio = 0.65,
           caption_color = "grey30",
           caption_vjust = 0,
           caption_position = "plot",
-          caption_margin = c(20, -10, 0, 0),
-          
-          # ここに書きたい気持ちは分かるが、現行システムでは x_axis_title_* は cfg$bar 側
-          # （下の apply で cfg$bar に流し込むようにする）
-          x_axis_title_margin = c(0, 0, 0, 0),
-          x_axis_title_vjust  = -1,
-          x_axis_title_hjust  = 0.0
+          caption_margin = c(20, -10, 0, 0)
+        )
       )
     ),
   

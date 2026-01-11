@@ -242,6 +242,24 @@ apply_bar_profile_to_cfg_v1 <- function(cfg, profile) {
   if (!is.null(profile$name_size))  cfg2$bar$name_size <- profile$name_size
   if (!is.null(profile$value_size)) cfg2$bar$value_size <- profile$value_size
   if (!is.null(profile$rank_size))  cfg2$bar$rank_size <- profile$rank_size
+
+  # ---- 追加: 統計ラベル vjust（profileで上書き可能） ---------------------------
+  if (!is.null(profile$cv_label_vjust))     cfg2$bar$cv_label_vjust <- profile$cv_label_vjust
+  if (!is.null(profile$mean_label_vjust))   cfg2$bar$mean_label_vjust <- profile$mean_label_vjust
+  if (!is.null(profile$median_label_vjust)) cfg2$bar$median_label_vjust <- profile$median_label_vjust
+
+  # ---- 追加: layout（profileで上書き可能） ------------------------------------
+  if (!is.null(profile$layout) && is.list(profile$layout)) {
+    for (nm in names(profile$layout)) {
+      cfg2$layout[[nm]] <- profile$layout[[nm]]
+    }
+
+    # x軸タイトル位置（歴史的に cfg$bar 配下に置いてあるので移送）
+    if (!is.null(profile$layout$x_axis_title_margin)) cfg2$bar$x_axis_title_margin <- profile$layout$x_axis_title_margin
+    if (!is.null(profile$layout$x_axis_title_vjust))  cfg2$bar$x_axis_title_vjust  <- profile$layout$x_axis_title_vjust
+    if (!is.null(profile$layout$x_axis_title_hjust))  cfg2$bar$x_axis_title_hjust  <- profile$layout$x_axis_title_hjust
+  }
+
   cfg2
 }
 
