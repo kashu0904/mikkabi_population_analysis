@@ -609,6 +609,7 @@ if (is.finite(cv_val) && !is.na(cv_val)) {
       limits = c(x_min, x_max),
       oob = scales::oob_keep,
       expand = expansion(mult = cfg$bar$x_expand),
+      labels = scales::label_comma(),  
       minor_breaks = function(x) make_minor_breaks_from_major(x, div = cfg$bar$x_minor_div %||% 2)
     ) +
     scale_y_discrete(

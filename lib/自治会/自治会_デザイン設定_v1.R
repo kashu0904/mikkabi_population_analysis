@@ -58,7 +58,7 @@
     # ---------------------------
     layout = list(
       margin = c(15, 25, 15, 50),
-      plot_margin = c(15, 20, 10, 50),
+      plot_margin = c(15, 25, 10, 55),
   
       # キャプション（出典）
       caption_hjust = 1,
@@ -66,7 +66,7 @@
       caption_color = "grey30",
       caption_vjust = 0,
       caption_position = "plot",
-      caption_margin = c(20, -10, 0, 0)
+      caption_margin = c(20, -17, 0, 0)
     ),
   
     # ---------------------------
@@ -114,7 +114,7 @@
       x_axis_line_color = "grey60",
       x_axis_line_size  = 0.2,
       x_axis_tick_color = "grey60",
-      x_axis_tick_size  = 0.4,
+      x_axis_tick_size  = 0.3,
       # 目盛りの長さ（pt）…X/Y共通（ggplot2 の axis.ticks.length）
       axis_tick_length_pt = 3.0,
       x_axis_text_color = "grey40",
@@ -136,9 +136,9 @@
       #  - name_size : Y軸（自治会名）
       #  - value_size: 値ラベル（世帯・割合）
       #  - rank_size : 順位ラベル
-      name_size  = 3.1,
-      value_size = 2.8,
-      rank_size  = 2.8,
+      name_size  = 3.0,
+      value_size = 2.7,
+      rank_size  = 2.7,
   
       # Y軸（自治会名）
       y_axis_label_face = "bold",
@@ -190,19 +190,19 @@
       cv_label_text = "・変動係数（cv）{value}%",
       cv_label_digits = 2,
       cv_label_color = "grey10",
-      cv_label_size  = 3.3,
+      cv_label_size  = 2.8,
       
       # ★追加：太さ（plain / bold / italic / bold.italic）
       cv_label_face  = "bold",
       
       cv_label_hjust = 0.0,
-      cv_label_vjust = 2.25,
-      cv_label_x_nudge_ratio = 0.25,
+      cv_label_vjust = 2.50,
+      cv_label_x_nudge_ratio = 0.20,
       
       
       # 歪度（skewness） ※CVと同じ“統計ラベル枠”に追加表示する
       skew_show = TRUE,
-      skew_label_text = "・歪度（skewness） {value}",
+      skew_label_text = "・歪度（skew） {value}",
       skew_label_digits = 2,
 
       mean_line_show     = TRUE,
@@ -214,7 +214,7 @@
       mean_label_anchor       = "bottom",  # "top" / "bottom"
       mean_label_text         = "平均値 {value}",   # {value} を数値に置換
       mean_label_color        = "#D89000",             # NULLなら line_color を使う
-      mean_label_size         = 3.0,
+      mean_label_size         = 2.8,
       mean_label_hjust        = 0,
       mean_label_vjust        = 6.3,
       mean_label_x_nudge_ratio = 0.00,            # x方向に少し右へ（x幅に対する比率）
@@ -222,13 +222,13 @@
       median_line_show     = TRUE,
       median_line_color    = "#87A0C8",
       median_line_size     = 0.3,
-      median_line_linetype = "dashed",#"dashed"
+      median_line_linetype = "solid",#"dashed"
       
       median_label_show          = TRUE,
       median_label_anchor        = "bottom",  # "top" / "bottom"
       median_label_text          = "中央値 {value}",
       median_label_color         = "#0072B2",
-      median_label_size          = 3.0,
+      median_label_size          = 2.8,
       median_label_hjust         = 0,
       median_label_vjust         = 4.7,          # 平均ラベルと被るならここを変える
       median_label_x_nudge_ratio = 0.00
@@ -321,12 +321,12 @@
         rank_size = NULL,
         x_expand = NULL,
         y_expand = c(4.000, 0.300),
-        cv_label_vjust     = 13.40,
-        mean_label_vjust   = 39.0,
-        median_label_vjust = 37.5,
+        cv_label_vjust     = 15.50,
+        mean_label_vjust   = 41.2,
+        median_label_vjust = 39.7,
         layout = list(
           margin = c(15, 25, 15, 50),
-          plot_margin = c(15, 20, 10, 50),
+          plot_margin = c(15, 25, 10, 55),
           x_axis_title_margin = c(0, 0, 0, 0),
           x_axis_title_vjust = -1,
           x_axis_title_hjust = 0.0,
@@ -335,7 +335,7 @@
           caption_color = "grey30",
           caption_vjust = 0,
           caption_position = "plot",
-          caption_margin = c(20, -10, 0, 0)
+          caption_margin = c(20, -17, 0, 0)
         )
       ),
   
@@ -343,20 +343,20 @@
       n06_10 = list(
         id = "n06-10",
         folder = "n06-10__w7h3__bw0.5",
-        bar_width = 0.38,
+        bar_width = 0.55,
         w = 7.5,
-        h = 4,
+        h = 6.0,
         name_size = NULL,
         value_size = NULL,
         rank_size = NULL,
         x_expand = NULL,
-        y_expand = c(0.100, 0.100),
-        cv_label_vjust     = 2.45,
-        mean_label_vjust   = 6.5,
-        median_label_vjust = 5.0,
+        y_expand = c(1.100, 0.100),
+        cv_label_vjust     = 11.00,
+        mean_label_vjust   = 27.7,
+        median_label_vjust = 26.2,
         layout = list(
           margin = c(15, 25, 15, 50),
-          plot_margin = c(15, 20, 10, 50),
+          plot_margin = c(15, 25, 10, 55),
           x_axis_title_margin = c(0, 0, 0, 0),
           x_axis_title_vjust = -1,
           x_axis_title_hjust = 0.0,
@@ -365,7 +365,7 @@
           caption_color = "grey30",
           caption_vjust = 0,
           caption_position = "plot",
-          caption_margin = c(20, -10, 0, 0)
+          caption_margin = c(20, -17, 0, 0)
         )
       ),
   
@@ -373,7 +373,7 @@
       n11_15 = list(
         id = "n11-15",
         folder = "n11-15__w7h5__bw0.5",
-        bar_width = 0.45,
+        bar_width = 0.60,
         w = 7.5,
         h = 5,
         name_size = NULL,
@@ -386,7 +386,7 @@
         median_label_vjust = 5.3,
         layout = list(
           margin = c(15, 25, 15, 50),
-          plot_margin = c(15, 20, 20, 50),
+          plot_margin = c(15, 25, 20, 55),
           x_axis_title_margin = c(0, 0, 0, 0),
           x_axis_title_vjust = -1,
           x_axis_title_hjust = 0.0,
@@ -395,7 +395,7 @@
           caption_color = "grey30",
           caption_vjust = 0,
           caption_position = "plot",
-          caption_margin = c(20, -10, -12, 0)
+          caption_margin = c(20, -17, -12, 0)
         )
       ),
   
@@ -416,7 +416,7 @@
         median_label_vjust = 5.0,
         layout = list(
           margin = c(15, 25, 15, 50),
-          plot_margin = c(15, 20, 10, 50),
+          plot_margin = c(15, 25, 10, 55),
           x_axis_title_margin = c(0, 0, 0, 0),
           x_axis_title_vjust = -1,
           x_axis_title_hjust = 0.0,
@@ -425,7 +425,7 @@
           caption_color = "grey30",
           caption_vjust = 0,
           caption_position = "plot",
-          caption_margin = c(20, -10, 0, 0)
+          caption_margin = c(20, -17, 0, 0)
         )
       )
     ),
