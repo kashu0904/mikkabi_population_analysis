@@ -1,0 +1,1 @@
+C:\Users\pirat\AppData\Local\Programs\Python\Python310\python.exe download_hamamatsushi_kubetsu_setai_jinkou_archive.py

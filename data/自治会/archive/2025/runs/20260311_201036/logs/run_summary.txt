@@ -1,0 +1,19 @@
+==== RESULT ====
+STATUS: 完全成功（エラー0 / 警告0）
+dataset_year: 2025
+records_total: 737
+output: C:\Users\pirat\Documents\MikkabiLab_population_analysis\data\自治会\2025
+snapshot: C:\Users\pirat\Documents\MikkabiLab_population_analysis\data\自治会\archive\2025\runs\20260311_201036\snapshots
+frozen_outputs: C:\Users\pirat\Documents\MikkabiLab_population_analysis\data\自治会\archive\2025\runs\20260311_201036\outputs
+prev_run_id: 20251229_173421
+diff_report_txt: C:\Users\pirat\Documents\MikkabiLab_population_analysis\data\自治会\2025\_DIFF__20251229_173421__to__20260311_201036.txt
+diff_report_csv: C:\Users\pirat\Documents\MikkabiLab_population_analysis\data\自治会\2025\_DIFF__20251229_173421__to__20260311_201036.csv
+
+---- ISSUES (by region) ----
+- hamakita: errors=0 warnings=0
+- kita: errors=0 warnings=0
+- tenryu: errors=0 warnings=0
+- naka: errors=0 warnings=0
+- higashi: errors=0 warnings=0
+- nishi: errors=0 warnings=0
+- minami: errors=0 warnings=0

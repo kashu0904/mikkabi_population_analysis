@@ -1,0 +1,63 @@
+[INFO] run_root=C:/Users/pirat/Documents/MikkabiLab_population_analysis/figures/自治会/2025/jichikai_20260105_234828
+[INFO] export_layout=region/(bar|pie)/file (flat)
+[INFO] script=04_run_export_all_一括出力_bar_pie直下_v1.R
+[INFO] getwd=C:/Users/pirat/Documents/MikkabiLab_population_analysis
+[INFO] project_root=C:/Users/pirat/Documents/MikkabiLab_population_analysis
+[INFO] lib_design=C:/Users/pirat/Documents/MikkabiLab_population_analysis/lib/自治会/自治会_デザイン設定_v1.R mtime=2026-01-05 23:48:18.464418
+[INFO] lib_plots=C:/Users/pirat/Documents/MikkabiLab_population_analysis/lib/自治会/自治会_図表関数_v1.R mtime=2026-01-04 22:37:31.104839
+[INFO] lib_export=C:/Users/pirat/Documents/MikkabiLab_population_analysis/lib/自治会/自治会_書き出し_4形式_v1.R mtime=2026-01-03 21:22:00.091623
+[CFG] cfg$pie$label_x_01_10 が未定義のため既定値を補完しました（現状維持）。必要ならデザイン設定で上書きしてください。
+[CFG] cfg$pie$slice_border_lwd_40_50 が NULL のため既定値を補完しました（現状維持）。
+[CFG] cfg$pie$slice_border_lwd_50_plus が NULL のため既定値を補完しました（現状維持）。
+[INFO] district_order_yaml=C:/Users/pirat/Documents/MikkabiLab_population_analysis/config/hamamatsu_district_order.yaml
+[INFO] numbering_prefix=on pad=2 sep='_'
+[INFO] 北地域 / 三ヶ日地区 :: n_jichikai=30 pie_label_x_used=0.77
+[INFO] 北地域 / 引佐地区 :: n_jichikai=28 pie_label_x_used=0.77
+[INFO] 北地域 / 細江地区 :: n_jichikai=20 pie_label_x_used=0.77
+[INFO] 北地域 / 都田地区 :: n_jichikai=14 pie_label_x_used=0.77
+[INFO] 北地域 / 新都田地区 :: n_jichikai=3 pie_label_x_used=0.77
+[INFO] 東地域 / 中ノ町地区 :: n_jichikai=9 pie_label_x_used=0.77
+[INFO] 東地域 / 和田地区 :: n_jichikai=12 pie_label_x_used=0.77
+[INFO] 東地域 / 積志地区 :: n_jichikai=38 pie_label_x_used=0.77
+[INFO] 東地域 / 笠井地区 :: n_jichikai=24 pie_label_x_used=0.77
+[INFO] 東地域 / 蒲地区 :: n_jichikai=11 pie_label_x_used=0.77
+[INFO] 東地域 / 長上地区 :: n_jichikai=12 pie_label_x_used=0.77
+[INFO] 西地域 / 伊佐見地区 :: n_jichikai=7 pie_label_x_used=0.77
+[INFO] 西地域 / 入野地区 :: n_jichikai=12 pie_label_x_used=0.77
+[INFO] 西地域 / 和地地区 :: n_jichikai=7 pie_label_x_used=0.77
+[INFO] 西地域 / 庄内地区 :: n_jichikai=9 pie_label_x_used=0.77
+[INFO] 西地域 / 神久呂地区 :: n_jichikai=4 pie_label_x_used=0.77
+[INFO] 西地域 / 篠原地区 :: n_jichikai=5 pie_label_x_used=0.77
+[INFO] 西地域 / 舞阪地区 :: n_jichikai=8 pie_label_x_used=0.77
+[INFO] 西地域 / 雄踏地区 :: n_jichikai=9 pie_label_x_used=0.77
+[INFO] 南地域 / 五島地区 :: n_jichikai=10 pie_label_x_used=0.77
+[INFO] 南地域 / 可美地区 :: n_jichikai=7 pie_label_x_used=0.77
+[INFO] 南地域 / 新津地区 :: n_jichikai=10 pie_label_x_used=0.77
+[INFO] 南地域 / 河輪地区 :: n_jichikai=7 pie_label_x_used=0.77
+[INFO] 南地域 / 白脇地区 :: n_jichikai=9 pie_label_x_used=0.77
+[INFO] 南地域 / 芳川地区 :: n_jichikai=22 pie_label_x_used=0.77
+[INFO] 南地域 / 飯田地区 :: n_jichikai=14 pie_label_x_used=0.77
+[INFO] 中地域 / アクト地区 :: n_jichikai=10 pie_label_x_used=0.77
+[INFO] 中地域 / 三方原地区 :: n_jichikai=18 pie_label_x_used=0.77
+[INFO] 中地域 / 中央地区 :: n_jichikai=16 pie_label_x_used=0.77
+[INFO] 中地域 / 佐鳴台地区 :: n_jichikai=7 pie_label_x_used=0.77
+[INFO] 中地域 / 北地区 :: n_jichikai=4 pie_label_x_used=0.77
+[INFO] 中地域 / 城北地区 :: n_jichikai=15 pie_label_x_used=0.77
+[INFO] 中地域 / 富塚地区 :: n_jichikai=6 pie_label_x_used=0.77
+[INFO] 中地域 / 曳馬地区 :: n_jichikai=16 pie_label_x_used=0.77
+[INFO] 中地域 / 江東地区 :: n_jichikai=13 pie_label_x_used=0.77
+[INFO] 中地域 / 江西地区 :: n_jichikai=10 pie_label_x_used=0.77
+[INFO] 中地域 / 県居地区 :: n_jichikai=8 pie_label_x_used=0.77
+[INFO] 中地域 / 萩丘地区 :: n_jichikai=11 pie_label_x_used=0.77
+[INFO] 中地域 / 西地区 :: n_jichikai=10 pie_label_x_used=0.77
+[INFO] 中地域 / 駅南地区 :: n_jichikai=12 pie_label_x_used=0.77
+[INFO] 浜北地域 / 麁玉地区 :: n_jichikai=11 pie_label_x_used=0.77
+[INFO] 浜北地域 / 赤佐地区 :: n_jichikai=10 pie_label_x_used=0.77
+[INFO] 浜北地域 / 中瀬地区 :: n_jichikai=8 pie_label_x_used=0.77
+[INFO] 浜北地域 / 浜名地区 :: n_jichikai=10 pie_label_x_used=0.77
+[INFO] 浜北地域 / 北浜地区 :: n_jichikai=28 pie_label_x_used=0.77
+[INFO] 天竜地域 / 天竜地区 :: n_jichikai=78 pie_label_x_used=0.77
+[INFO] 天竜地域 / 春野地区 :: n_jichikai=40 pie_label_x_used=0.77
+[INFO] 天竜地域 / 佐久間地区 :: n_jichikai=36 pie_label_x_used=0.77
+[INFO] 天竜地域 / 水窪地区 :: n_jichikai=13 pie_label_x_used=0.77
+[INFO] 天竜地域 / 龍山地区 :: n_jichikai=6 pie_label_x_used=0.77

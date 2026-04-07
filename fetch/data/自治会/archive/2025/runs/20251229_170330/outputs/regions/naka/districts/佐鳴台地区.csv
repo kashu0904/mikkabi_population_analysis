@@ -1,0 +1,8 @@
+﻿ward,region_key,district,jichikai,households,corporate,asof,source_url
+中央区,naka,佐鳴台地区,佐鳴台一丁目,721,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,佐鳴台地区,佐鳴台三丁目,872,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,佐鳴台地区,佐鳴台三丁目 県営住宅,578,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,佐鳴台地区,佐鳴台二丁目,731,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,佐鳴台地区,佐鳴台五丁目,585,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,佐鳴台地区,佐鳴台六丁目,398,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,佐鳴台地区,佐鳴台四丁目,934,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html

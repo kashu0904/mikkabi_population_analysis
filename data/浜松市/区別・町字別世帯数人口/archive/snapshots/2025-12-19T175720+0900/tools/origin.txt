@@ -1,0 +1,3 @@
+original_script_filename: download_hamamatsushi_kubetsu_setai_jinkou_archive.py
+executable_script: tools/download_script.py
+repro_command: python tools/download_script.py

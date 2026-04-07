@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='792.00pt' height='432.00pt' viewBox='0 0 792.00 432.00'>
+<g class='svglite'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+    .svglite g.glyphgroup path {
+      fill: inherit;
+      stroke: none;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
+<defs>
+  <clipPath id='cpMC4wMHw3OTIuMDB8MC4wMHw0MzIuMDA='>
+    <rect x='0.00' y='0.00' width='792.00' height='432.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw3OTIuMDB8MC4wMHw0MzIuMDA=)'>
+<rect x='0.00' y='0.000000000000057' width='792.00' height='432.00' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='91.26' y='34.33' width='675.83' height='340.53' style='stroke-width: 1.07; stroke: none; fill: #E6E6E6;' />
+<polyline points='228.87,374.86 228.87,34.33 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='402.60,374.86 402.60,34.33 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='576.32,374.86 576.32,34.33 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='750.05,374.86 750.05,34.33 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='91.26,354.83 767.09,354.83 ' style='stroke-width: 1.92; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='91.26,321.44 767.09,321.44 ' style='stroke-width: 1.92; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='91.26,288.06 767.09,288.06 ' style='stroke-width: 1.92; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='91.26,254.67 767.09,254.67 ' style='stroke-width: 1.92; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='91.26,221.29 767.09,221.29 ' style='stroke-width: 1.92; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='91.26,187.90 767.09,187.90 ' style='stroke-width: 1.92; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='91.26,154.52 767.09,154.52 ' style='stroke-width: 1.92; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='91.26,121.13 767.09,121.13 ' style='stroke-width: 1.92; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='91.26,87.74 767.09,87.74 ' style='stroke-width: 1.92; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='91.26,54.36 767.09,54.36 ' style='stroke-width: 1.92; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='142.01,374.86 142.01,34.33 ' style='stroke-width: 1.28; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='315.73,374.86 315.73,34.33 ' style='stroke-width: 1.28; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='489.46,374.86 489.46,34.33 ' style='stroke-width: 1.28; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='663.18,374.86 663.18,34.33 ' style='stroke-width: 1.28; stroke: #FFFFFF; stroke-linecap: butt;' />
+<rect x='142.01' y='44.34' width='495.12' height='20.03' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #F8766D;' />
+<rect x='142.01' y='77.73' width='432.58' height='20.03' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #D89000;' />
+<rect x='142.01' y='111.11' width='254.51' height='20.03' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #A3A500;' />
+<rect x='142.01' y='144.50' width='222.37' height='20.03' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #39B600;' />
+<rect x='142.01' y='177.89' width='183.28' height='20.03' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #00BF7D;' />
+<rect x='142.01' y='211.27' width='172.86' height='20.03' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #00BFC4;' />
+<rect x='142.01' y='244.66' width='162.43' height='20.03' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #00B0F6;' />
+<rect x='142.01' y='278.04' width='116.40' height='20.03' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #9590FF;' />
+<rect x='142.01' y='311.43' width='112.92' height='20.03' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #E76BF3;' />
+<rect x='142.01' y='344.81' width='92.07' height='20.03' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FF62BC;' />
+<text x='117.25' y='58.22' text-anchor='end' style='font-size: 10.81px; font-weight: bold; font-family: "Arial";' textLength='16.80px' lengthAdjust='spacingAndGlyphs'>1位</text>
+<text x='117.25' y='91.61' text-anchor='end' style='font-size: 10.81px; font-weight: bold; font-family: "Arial";' textLength='16.80px' lengthAdjust='spacingAndGlyphs'>2位</text>
+<text x='117.25' y='125.00' text-anchor='end' style='font-size: 10.81px; font-weight: bold; font-family: "Arial";' textLength='16.80px' lengthAdjust='spacingAndGlyphs'>3位</text>
+<text x='117.25' y='158.38' text-anchor='end' style='font-size: 10.81px; font-weight: bold; font-family: "Arial";' textLength='16.80px' lengthAdjust='spacingAndGlyphs'>4位</text>
+<text x='117.25' y='191.77' text-anchor='end' style='font-size: 10.81px; font-weight: bold; font-family: "Arial";' textLength='16.80px' lengthAdjust='spacingAndGlyphs'>5位</text>
+<text x='117.25' y='225.15' text-anchor='end' style='font-size: 10.81px; font-weight: bold; font-family: "Arial";' textLength='16.80px' lengthAdjust='spacingAndGlyphs'>6位</text>
+<text x='117.25' y='258.54' text-anchor='end' style='font-size: 10.81px; font-weight: bold; font-family: "Arial";' textLength='16.80px' lengthAdjust='spacingAndGlyphs'>7位</text>
+<text x='117.25' y='291.92' text-anchor='end' style='font-size: 10.81px; font-weight: bold; font-family: "Arial";' textLength='16.80px' lengthAdjust='spacingAndGlyphs'>8位</text>
+<text x='117.25' y='325.31' text-anchor='end' style='font-size: 10.81px; font-weight: bold; font-family: "Arial";' textLength='16.80px' lengthAdjust='spacingAndGlyphs'>9位</text>
+<text x='117.25' y='358.70' text-anchor='end' style='font-size: 10.81px; font-weight: bold; font-family: "Arial";' textLength='22.80px' lengthAdjust='spacingAndGlyphs'>10位</text>
+<text x='650.89' y='58.22' style='font-size: 10.81px; font-weight: bold; font-family: "Arial";' textLength='91.78px' lengthAdjust='spacingAndGlyphs'>570世帯（22.1%）</text>
+<text x='588.35' y='91.61' style='font-size: 10.81px; font-weight: bold; font-family: "Arial";' textLength='91.78px' lengthAdjust='spacingAndGlyphs'>498世帯（19.3%）</text>
+<text x='410.19' y='125.00' style='font-size: 10.81px; font-weight: bold; font-family: "Arial";' textLength='91.19px' lengthAdjust='spacingAndGlyphs'>293世帯（11.3%）</text>
+<text x='377.24' y='158.38' style='font-size: 10.81px; font-weight: bold; font-family: "Arial";' textLength='85.78px' lengthAdjust='spacingAndGlyphs'>256世帯（9.9%）</text>
+<text x='338.07' y='191.77' style='font-size: 10.81px; font-weight: bold; font-family: "Arial";' textLength='85.19px' lengthAdjust='spacingAndGlyphs'>211世帯（8.2%）</text>
+<text x='327.73' y='225.15' style='font-size: 10.81px; font-weight: bold; font-family: "Arial";' textLength='85.78px' lengthAdjust='spacingAndGlyphs'>199世帯（7.7%）</text>
+<text x='317.31' y='258.54' style='font-size: 10.81px; font-weight: bold; font-family: "Arial";' textLength='85.78px' lengthAdjust='spacingAndGlyphs'>187世帯（7.2%）</text>
+<text x='271.27' y='291.92' style='font-size: 10.81px; font-weight: bold; font-family: "Arial";' textLength='85.78px' lengthAdjust='spacingAndGlyphs'>134世帯（5.2%）</text>
+<text x='267.80' y='325.31' style='font-size: 10.81px; font-weight: bold; font-family: "Arial";' textLength='85.78px' lengthAdjust='spacingAndGlyphs'>130世帯（5.0%）</text>
+<text x='246.95' y='358.70' style='font-size: 10.81px; font-weight: bold; font-family: "Arial";' textLength='85.78px' lengthAdjust='spacingAndGlyphs'>106世帯（4.1%）</text>
+<text x='86.33' y='358.77' text-anchor='end' style='font-size: 11.00px;fill: #4D4D4D; font-family: "Arial";' textLength='44.00px' lengthAdjust='spacingAndGlyphs'>江之島町</text>
+<text x='86.33' y='325.38' text-anchor='end' style='font-size: 11.00px;fill: #4D4D4D; font-family: "Arial";' textLength='61.42px' lengthAdjust='spacingAndGlyphs'>×遠州浜第五</text>
+<text x='86.33' y='292.00' text-anchor='end' style='font-size: 11.00px;fill: #4D4D4D; font-family: "Arial";' textLength='33.00px' lengthAdjust='spacingAndGlyphs'>福島町</text>
+<text x='86.33' y='258.61' text-anchor='end' style='font-size: 11.00px;fill: #4D4D4D; font-family: "Arial";' textLength='50.42px' lengthAdjust='spacingAndGlyphs'>×西島町東</text>
+<text x='86.33' y='225.22' text-anchor='end' style='font-size: 11.00px;fill: #4D4D4D; font-family: "Arial";' textLength='61.42px' lengthAdjust='spacingAndGlyphs'>×遠州浜第四</text>
+<text x='86.33' y='191.84' text-anchor='end' style='font-size: 11.00px;fill: #4D4D4D; font-family: "Arial";' textLength='50.42px' lengthAdjust='spacingAndGlyphs'>×西島町西</text>
+<text x='86.33' y='158.45' text-anchor='end' style='font-size: 11.00px;fill: #4D4D4D; font-family: "Arial";' textLength='33.00px' lengthAdjust='spacingAndGlyphs'>松島町</text>
+<text x='86.33' y='125.07' text-anchor='end' style='font-size: 11.00px;fill: #4D4D4D; font-family: "Arial";' textLength='55.00px' lengthAdjust='spacingAndGlyphs'>遠州浜第一</text>
+<text x='86.33' y='91.68' text-anchor='end' style='font-size: 11.00px;fill: #4D4D4D; font-family: "Arial";' textLength='61.42px' lengthAdjust='spacingAndGlyphs'>×遠州浜第二</text>
+<text x='86.33' y='58.30' text-anchor='end' style='font-size: 11.00px;fill: #4D4D4D; font-family: "Arial";' textLength='55.00px' lengthAdjust='spacingAndGlyphs'>遠州浜第三</text>
+<polyline points='88.52,354.83 91.26,354.83 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='88.52,321.44 91.26,321.44 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='88.52,288.06 91.26,288.06 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='88.52,254.67 91.26,254.67 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='88.52,221.29 91.26,221.29 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='88.52,187.90 91.26,187.90 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='88.52,154.52 91.26,154.52 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='88.52,121.13 91.26,121.13 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='88.52,87.74 91.26,87.74 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='88.52,54.36 91.26,54.36 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='142.01,377.60 142.01,374.86 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='315.73,377.60 315.73,374.86 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='489.46,377.60 489.46,374.86 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='663.18,377.60 663.18,374.86 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<text x='142.01' y='387.67' text-anchor='middle' style='font-size: 11.00px;fill: #4D4D4D; font-family: "Arial";' textLength='6.12px' lengthAdjust='spacingAndGlyphs'>0</text>
+<text x='315.73' y='387.67' text-anchor='middle' style='font-size: 11.00px;fill: #4D4D4D; font-family: "Arial";' textLength='18.38px' lengthAdjust='spacingAndGlyphs'>200</text>
+<text x='489.46' y='387.67' text-anchor='middle' style='font-size: 11.00px;fill: #4D4D4D; font-family: "Arial";' textLength='18.38px' lengthAdjust='spacingAndGlyphs'>400</text>
+<text x='663.18' y='387.67' text-anchor='middle' style='font-size: 11.00px;fill: #4D4D4D; font-family: "Arial";' textLength='18.38px' lengthAdjust='spacingAndGlyphs'>600</text>
+<text x='429.18' y='400.60' text-anchor='middle' style='font-size: 11.00px; font-family: "Arial";' textLength='33.00px' lengthAdjust='spacingAndGlyphs'>世帯数</text>
+<text x='91.26' y='25.69' style='font-size: 15.00px; font-weight: bold; font-family: "Arial";' textLength='281.72px' lengthAdjust='spacingAndGlyphs'>五島地区 2025：自治会別 世帯数（降順）</text>
+<text x='767.09' y='415.09' text-anchor='end' style='font-size: 9.35px;fill: #4D4D4D; font-family: "Arial";' textLength='345.97px' lengthAdjust='spacingAndGlyphs'>出典：浜松市自治連合会「南地域の地区別単位自治会」（令和7年4月1日）を基に作成</text>
+</g>
+</g>
+</svg>

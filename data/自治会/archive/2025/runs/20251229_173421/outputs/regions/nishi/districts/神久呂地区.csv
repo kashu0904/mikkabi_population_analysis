@@ -1,0 +1,5 @@
+﻿ward,region_key,district,jichikai,households,corporate,asof,source_url
+中央区,nishi,神久呂地区,大久保町,584,False,2025-04-01,https://www.hamajitiren.jp/chiiki/nishi02.html
+中央区,nishi,神久呂地区,神ケ谷町,935,True,2025-04-01,https://www.hamajitiren.jp/chiiki/nishi02.html
+中央区,nishi,神久呂地区,神原町,503,True,2025-04-01,https://www.hamajitiren.jp/chiiki/nishi02.html
+中央区,nishi,神久呂地区,西山町,2050,True,2025-04-01,https://www.hamajitiren.jp/chiiki/nishi02.html

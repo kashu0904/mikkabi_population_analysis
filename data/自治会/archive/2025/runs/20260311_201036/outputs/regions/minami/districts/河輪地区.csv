@@ -1,0 +1,8 @@
+﻿ward,region_key,district,jichikai,households,corporate,asof,source_url
+中央区,minami,河輪地区,三新町,191,True,2025-04-01,https://www.hamajitiren.jp/chiiki/minami02.html
+中央区,minami,河輪地区,富屋町,160,False,2025-04-01,https://www.hamajitiren.jp/chiiki/minami02.html
+中央区,minami,河輪地区,東町,356,True,2025-04-01,https://www.hamajitiren.jp/chiiki/minami02.html
+中央区,minami,河輪地区,河輪町上,240,True,2025-04-01,https://www.hamajitiren.jp/chiiki/minami02.html
+中央区,minami,河輪地区,河輪町下,212,False,2025-04-01,https://www.hamajitiren.jp/chiiki/minami02.html
+中央区,minami,河輪地区,西町,407,True,2025-04-01,https://www.hamajitiren.jp/chiiki/minami02.html
+中央区,minami,河輪地区,長田町,150,True,2025-04-01,https://www.hamajitiren.jp/chiiki/minami02.html

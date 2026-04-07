@@ -1,0 +1,58 @@
+{
+  "dataset": "町字別・年齢別人口表",
+  "publisher": "浜松市",
+  "snapshot_id": "2025-12-19T174608+0900",
+  "started_at": "2025-12-19T17:46:08.039338+09:00",
+  "finished_at": "2025-12-19T17:58:11.292033+09:00",
+  "ntp_server_started": "ntp.nict.jp",
+  "ntp_server_finished": "ntp.nict.jp",
+  "elapsed_monotonic_sec": 723.235,
+  "script_name": "download_hamamatsushi_town_age_population_archive.py",
+  "script_sha256": "4c39b319e62ea5599765d622de5a46cadabc742fcef2cd8cad60812fda3ce7dc",
+  "python_version": "3.10.0 (tags/v3.10.0:b494f59, Oct  4 2021, 19:00:18) [MSC v.1929 64 bit (AMD64)]",
+  "base_urls": [
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/1_jinkou-setai/007_nenreibetsu.html",
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/1_jinkou-setai/007_past_nenreibetsu2.html",
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/1_jinkou-setai/007_past_nenreibetsu1.html",
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/1_jinkou-setai/007_past_nenreibetsu.html"
+  ],
+  "target_exts": [
+    ".xls",
+    ".xlsx"
+  ],
+  "outputs": {
+    "snapshot_root": "C:\\Users\\pirat\\Documents\\MikkabiLab_population_analysis\\data\\浜松市\\町字別・年齢別人口表\\archive\\snapshots\\2025-12-19T174608+0900",
+    "manifest_csv": "_manifest_download.csv",
+    "tools_dir": "tools"
+  },
+  "counts_by_era": {
+    "再編前": {
+      "浜松市": 32,
+      "中区": 34,
+      "東区": 34,
+      "西区": 34,
+      "南区": 34,
+      "北区": 34,
+      "浜北区": 34,
+      "天竜区": 34
+    },
+    "再編後": {
+      "浜松市": 4,
+      "中央区": 4,
+      "浜名区": 4,
+      "天竜区": 4
+    },
+    "市町村合併前": {
+      "浜松市、中央～江東": 27,
+      "白脇～可美": 28,
+      "浜名～龍山": 3
+    },
+    "other": {}
+  },
+  "baseline_fixed_counts": {
+    "as_of": "2025-12-15",
+    "scope": "old+before",
+    "expected_fixed_total_old_before": 329,
+    "note": "2025-12-15時点で浜松市HPから取得できた公開ファイル数。以後この件数は変わらない前提で固定検証する。"
+  }
+}

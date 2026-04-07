@@ -1,0 +1,5 @@
+time,kind,path,ok,message
+"2026-02-10 04:31:06","pdf","C:/Users/pirat/Documents/MikkabiLab_population_analysis/figures/自治会/2025/test_20260210_043105/pdf/北地域/bar/default__w7h7/自治会世帯数__三ヶ日地区__bar.pdf","TRUE",""
+"2026-02-10 04:31:07","pdf","C:/Users/pirat/Documents/MikkabiLab_population_analysis/figures/自治会/2025/test_20260210_043105/pdf/北地域/pie/fixed__w7h7__top5/自治会世帯数__三ヶ日地区__pie.pdf","TRUE",""
+"2026-02-10 04:31:14","eps","C:/Users/pirat/Documents/MikkabiLab_population_analysis/figures/自治会/2025/test_20260210_043105/eps/北地域/bar/default__w7h7/自治会世帯数__三ヶ日地区__bar.eps","FALSE","file.rename(tmp -> original) failed"
+"2026-02-10 04:31:21","eps","C:/Users/pirat/Documents/MikkabiLab_population_analysis/figures/自治会/2025/test_20260210_043105/eps/北地域/pie/fixed__w7h7__top5/自治会世帯数__三ヶ日地区__pie.eps","TRUE",""

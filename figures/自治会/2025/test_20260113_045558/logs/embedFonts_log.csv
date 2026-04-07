@@ -1,0 +1,5 @@
+time,kind,path,ok,message
+"2026-01-13 04:56:00","pdf","C:/Users/pirat/Documents/MikkabiLab_population_analysis/figures/自治会/2025/test_20260113_045558/pdf/南地域/bar/n06-10__w7h3__bw0.5/自治会世帯数__新津地区__bar.pdf","TRUE",""
+"2026-01-13 04:56:01","pdf","C:/Users/pirat/Documents/MikkabiLab_population_analysis/figures/自治会/2025/test_20260113_045558/pdf/南地域/pie/fixed__w7h7__top5/自治会世帯数__新津地区__pie.pdf","TRUE",""
+"2026-01-13 04:56:07","eps","C:/Users/pirat/Documents/MikkabiLab_population_analysis/figures/自治会/2025/test_20260113_045558/eps/南地域/bar/n06-10__w7h3__bw0.5/自治会世帯数__新津地区__bar.eps","TRUE",""
+"2026-01-13 04:56:09","eps","C:/Users/pirat/Documents/MikkabiLab_population_analysis/figures/自治会/2025/test_20260113_045558/eps/南地域/pie/fixed__w7h7__top5/自治会世帯数__新津地区__pie.eps","TRUE",""

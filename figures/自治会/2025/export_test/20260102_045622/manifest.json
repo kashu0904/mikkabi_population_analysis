@@ -1,0 +1,128 @@
+{
+  "time": "2026-01-02 04:56:37.257148",
+  "R": "R version 4.4.0 (2024-04-24 ucrt)",
+  "platform": "x86_64-w64-mingw32",
+  "packages": {
+    "ggplot2": "3.5.2",
+    "svglite": "2.2.2",
+    "ragg": "1.5.0"
+  },
+  "cfg": {
+    "font": {
+      "family": "Noto Sans JP",
+      "fallback_family": "Yu Gothic",
+      "base_size": 11,
+      "title_add": 4,
+      "bold_face": "bold"
+    },
+    "layout": {
+      "margin": [15, 25, 15, 0],
+      "plot_margin": {},
+      "caption_hjust": 1,
+      "caption_vjust": 1.5,
+      "caption_size_ratio": 0.85,
+      "caption_color": "grey30",
+      "caption_position": "plot",
+      "caption_margin": [0, 0, 0, 0]
+    },
+    "bar": {
+      "fill_mode": "legacy",
+      "bar_color": "#005686",
+      "bar_palette": ["#005686", "#0072B2", "#009E73", "#E69F00", "#D55E00", "#CC79A7", "#56B4E9", "#F0E442"],
+      "bar_width": 0.5,
+      "rank_side": "right",
+      "rank_right_ratio": 0.03,
+      "rank_hjust": 0.5,
+      "rank_push_ratio": 0.19,
+      "rank_left_ratio": 0.05,
+      "value_hjust": -0.06,
+      "value_x_mode": "bar_end",
+      "value_x_ratio": 0,
+      "x_minor_div": 2,
+      "grid_major_size": 0.2,
+      "grid_minor_size": 0.1,
+      "grid_major_color": "white",
+      "grid_minor_color": "white",
+      "bar_border_color": "black",
+      "bar_border_size": 0.1,
+      "bar_border_alpha": 1,
+      "label_size": 3.8,
+      "name_size": 4.5,
+      "value_size": 1.5,
+      "rank_size": 1.5,
+      "x_expand": [0.02, 0.16],
+      "y_expand": [0.05, 0.04],
+      "x_axis_line": false,
+      "x_axis_ticks": true,
+      "x_axis_line_color": "grey40",
+      "x_axis_line_size": 0.4,
+      "x_axis_tick_color": "grey40",
+      "x_axis_tick_size": 0.3,
+      "x_axis_tick_length_pt": 3,
+      "x_axis_text_color": "grey20",
+      "x_axis_text_size": null,
+      "x_axis_title_color": "grey20",
+      "x_axis_title_size": null,
+      "y_axis_label_face": "bold",
+      "name_color": "#000000",
+      "y_axis_line": false,
+      "y_axis_ticks": true,
+      "y_axis_line_color": "grey40",
+      "y_axis_line_size": 0.3,
+      "y_axis_tick_color": "grey40",
+      "y_axis_tick_size": 0.3,
+      "y_axis_tick_length_pt": 3,
+      "y_axis_text_color": {},
+      "y_axis_text_size": null,
+      "panel_bg": "#E6E6E6",
+      "grid_x_color": "white",
+      "grid_x_lwd": 0.2,
+      "grid_y_color": "white",
+      "grid_y_lwd": 0.2
+    },
+    "pie": {
+      "fill_mode": "legacy",
+      "palette": ["#005686", "#0072B2", "#009E73", "#E69F00", "#D55E00", "#CC79A7", "#56B4E9", "#F0E442"],
+      "reverse_levels": true,
+      "label_x": 1.15,
+      "label_size": 3.6,
+      "label_lineheight": 0.95,
+      "slice_border_color": "white",
+      "slice_border_lwd": 0.5,
+      "margin": [15, 30, 15, 25]
+    },
+    "export": {
+      "w": 7,
+      "h": 7,
+      "png_dpi": 300,
+      "ragg_scaling": 1,
+      "try_embed_fonts": true
+    }
+  },
+  "outputs": {
+    "svg": {
+      "bar": "C:/Users/pirat/Documents/MikkabiLab_population_analysis/figures/自治会/2025/export_test/20260102_045622/mikkabi_天竜地区_bar.svg",
+      "pie": "C:/Users/pirat/Documents/MikkabiLab_population_analysis/figures/自治会/2025/export_test/20260102_045622/mikkabi_天竜地区_pie.svg"
+    },
+    "svg_showtext": {
+      "bar": "C:/Users/pirat/Documents/MikkabiLab_population_analysis/figures/自治会/2025/export_test/20260102_045622/mikkabi_天竜地区_bar_outline.svg",
+      "pie": "C:/Users/pirat/Documents/MikkabiLab_population_analysis/figures/自治会/2025/export_test/20260102_045622/mikkabi_天竜地区_pie_outline.svg"
+    },
+    "pdf_cairo": {
+      "bar": "C:/Users/pirat/Documents/MikkabiLab_population_analysis/figures/自治会/2025/export_test/20260102_045622/mikkabi_天竜地区_bar.pdf",
+      "pie": "C:/Users/pirat/Documents/MikkabiLab_population_analysis/figures/自治会/2025/export_test/20260102_045622/mikkabi_天竜地区_pie.pdf"
+    },
+    "pdf_showtext": {
+      "bar": "C:/Users/pirat/Documents/MikkabiLab_population_analysis/figures/自治会/2025/export_test/20260102_045622/mikkabi_天竜地区_bar_outline.pdf",
+      "pie": "C:/Users/pirat/Documents/MikkabiLab_population_analysis/figures/自治会/2025/export_test/20260102_045622/mikkabi_天竜地区_pie_outline.pdf"
+    },
+    "eps_cairo": {
+      "bar": "C:/Users/pirat/Documents/MikkabiLab_population_analysis/figures/自治会/2025/export_test/20260102_045622/mikkabi_天竜地区_bar.eps",
+      "pie": "C:/Users/pirat/Documents/MikkabiLab_population_analysis/figures/自治会/2025/export_test/20260102_045622/mikkabi_天竜地区_pie.eps"
+    },
+    "png_ragg": {
+      "bar": "C:/Users/pirat/Documents/MikkabiLab_population_analysis/figures/自治会/2025/export_test/20260102_045622/mikkabi_天竜地区_bar.png",
+      "pie": "C:/Users/pirat/Documents/MikkabiLab_population_analysis/figures/自治会/2025/export_test/20260102_045622/mikkabi_天竜地区_pie.png"
+    }
+  }
+}

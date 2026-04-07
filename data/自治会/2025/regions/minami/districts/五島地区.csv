@@ -1,0 +1,11 @@
+﻿ward,region_key,district,jichikai,households,corporate,asof,source_url
+中央区,minami,五島地区,松島町,256,True,2025-04-01,https://www.hamajitiren.jp/chiiki/minami02.html
+中央区,minami,五島地区,江之島町,106,True,2025-04-01,https://www.hamajitiren.jp/chiiki/minami02.html
+中央区,minami,五島地区,福島町,134,True,2025-04-01,https://www.hamajitiren.jp/chiiki/minami02.html
+中央区,minami,五島地区,西島町東,187,False,2025-04-01,https://www.hamajitiren.jp/chiiki/minami02.html
+中央区,minami,五島地区,西島町西,211,False,2025-04-01,https://www.hamajitiren.jp/chiiki/minami02.html
+中央区,minami,五島地区,遠州浜第一,293,True,2025-04-01,https://www.hamajitiren.jp/chiiki/minami02.html
+中央区,minami,五島地区,遠州浜第三,570,True,2025-04-01,https://www.hamajitiren.jp/chiiki/minami02.html
+中央区,minami,五島地区,遠州浜第二,498,False,2025-04-01,https://www.hamajitiren.jp/chiiki/minami02.html
+中央区,minami,五島地区,遠州浜第五,130,False,2025-04-01,https://www.hamajitiren.jp/chiiki/minami02.html
+中央区,minami,五島地区,遠州浜第四,199,False,2025-04-01,https://www.hamajitiren.jp/chiiki/minami02.html

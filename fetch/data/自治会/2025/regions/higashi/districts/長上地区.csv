@@ -1,0 +1,13 @@
+﻿ward,region_key,district,jichikai,households,corporate,asof,source_url
+中央区,higashi,長上地区,上石田町,791,False,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,長上地区,下石田町,980,False,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,長上地区,中田町,420,True,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,長上地区,原島町,1200,True,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,長上地区,天王町中,903,True,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,長上地区,天王町東,580,True,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,長上地区,天王町西,1110,True,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,長上地区,小池町,2480,True,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,長上地区,市野町北,538,False,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,長上地区,市野町南,746,False,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,長上地区,市野町東,575,False,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,長上地区,鷺の宮団地,616,False,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html

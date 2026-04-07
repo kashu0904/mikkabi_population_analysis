@@ -1,0 +1,13 @@
+﻿ward,region_key,district,jichikai,households,corporate,asof,source_url
+中央区,naka,駅南地区,北寺島本町,369,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,駅南地区,北寺島東町,540,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,駅南地区,北寺島西町,190,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,駅南地区,寺島町,1035,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,駅南地区,砂山町第一,159,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,駅南地区,砂山町第三,108,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,駅南地区,砂山町第二,300,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,駅南地区,砂山町第五,120,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,駅南地区,砂山町第六,200,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,駅南地区,砂山町第四,200,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,駅南地区,駅南団地,82,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,駅南地区,龍禅寺町,1400,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html

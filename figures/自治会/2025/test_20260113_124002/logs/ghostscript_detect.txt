@@ -1,0 +1,4 @@
+R_GSCMD=
+gswin64c.gswin64c=C:\PROGRA~1\gs\GS1006~1.0\bin\gswin64c.exe
+gswin32c.gswin32c=
+gs.gs=

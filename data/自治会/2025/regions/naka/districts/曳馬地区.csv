@@ -1,0 +1,17 @@
+﻿ward,region_key,district,jichikai,households,corporate,asof,source_url
+中央区,naka,曳馬地区,上島町北,1080,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,曳馬地区,上島町南,1016,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,曳馬地区,上島町東,1599,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,曳馬地区,上島町西,918,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,曳馬地区,助信町,1208,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,曳馬地区,十軒町,838,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,曳馬地区,新津町,1073,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,曳馬地区,早出町,3194,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,曳馬地区,曳馬町三浦,530,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,曳馬地区,曳馬町宮,374,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,曳馬地区,曳馬町本郷,961,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,曳馬地区,曳馬町金屋,599,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,曳馬地区,曳馬町阿弥陀,1130,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,曳馬地区,細島町,941,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,曳馬地区,茄子町,442,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,曳馬地区,高林,1375,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
