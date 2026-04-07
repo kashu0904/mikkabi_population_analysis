@@ -1,0 +1,152 @@
+{
+  "timestamp": "2025-12-29T17:03:53.930937",
+  "script_path": "C:\\Users\\pirat\\Documents\\MikkabiLab_population_analysis\\fetch\\archive_hamajitiren_jichikai_households_v7_9.py",
+  "project_root": "C:\\Users\\pirat\\Documents\\MikkabiLab_population_analysis\\fetch",
+  "dataset_year": 2025,
+  "out_dir": "C:\\Users\\pirat\\Documents\\MikkabiLab_population_analysis\\fetch\\data\\自治会\\2025",
+  "archive_run_dir": "C:\\Users\\pirat\\Documents\\MikkabiLab_population_analysis\\fetch\\data\\自治会\\archive\\2025\\runs\\20251229_170348",
+  "targets": [
+    {
+      "key": "hamakita",
+      "ward": "浜名区",
+      "url": "https://www.hamajitiren.jp/chiiki/hamakita02.html"
+    },
+    {
+      "key": "kita",
+      "ward": "浜名区",
+      "url": "https://www.hamajitiren.jp/chiiki/kita02.html"
+    },
+    {
+      "key": "tenryu",
+      "ward": "天竜区",
+      "url": "https://www.hamajitiren.jp/chiiki/tenryu02.html"
+    },
+    {
+      "key": "naka",
+      "ward": "中央区",
+      "url": "https://www.hamajitiren.jp/chiiki/naka02.html"
+    },
+    {
+      "key": "higashi",
+      "ward": "中央区",
+      "url": "https://www.hamajitiren.jp/chiiki/higashi02.html"
+    },
+    {
+      "key": "nishi",
+      "ward": "中央区",
+      "url": "https://www.hamajitiren.jp/chiiki/nishi02.html"
+    },
+    {
+      "key": "minami",
+      "ward": "中央区",
+      "url": "https://www.hamajitiren.jp/chiiki/minami02.html"
+    }
+  ],
+  "python": "3.10.0 (tags/v3.10.0:b494f59, Oct  4 2021, 19:00:18) [MSC v.1929 64 bit (AMD64)]",
+  "stats": [
+    {
+      "region_key": "hamakita",
+      "ward": "浜名区",
+      "url": "https://www.hamajitiren.jp/chiiki/hamakita02.html",
+      "asof": "2025-04-01",
+      "exp_districts": 5,
+      "exp_jichikai": 67,
+      "detected_districts": 5,
+      "detected_jichikai": 67,
+      "total_calc": 33462,
+      "total_html": 33462,
+      "subtotal_warns": 0
+    },
+    {
+      "region_key": "kita",
+      "ward": "浜名区",
+      "url": "https://www.hamajitiren.jp/chiiki/kita02.html",
+      "asof": "2025-04-01",
+      "exp_districts": 5,
+      "exp_jichikai": 95,
+      "detected_districts": 5,
+      "detected_jichikai": 95,
+      "total_calc": 18607,
+      "total_html": 18607,
+      "subtotal_warns": 0
+    },
+    {
+      "region_key": "tenryu",
+      "ward": "天竜区",
+      "url": "https://www.hamajitiren.jp/chiiki/tenryu02.html",
+      "asof": "2025-04-01",
+      "exp_districts": 5,
+      "exp_jichikai": 173,
+      "detected_districts": 5,
+      "detected_jichikai": 173,
+      "total_calc": 10194,
+      "total_html": 10194,
+      "subtotal_warns": 0
+    },
+    {
+      "region_key": "naka",
+      "ward": "中央区",
+      "url": "https://www.hamajitiren.jp/chiiki/naka02.html",
+      "asof": "2025-04-01",
+      "exp_districts": 14,
+      "exp_jichikai": 156,
+      "detected_districts": 14,
+      "detected_jichikai": 156,
+      "total_calc": 125747,
+      "total_html": 125747,
+      "subtotal_warns": 0
+    },
+    {
+      "region_key": "higashi",
+      "ward": "中央区",
+      "url": "https://www.hamajitiren.jp/chiiki/higashi02.html",
+      "asof": "2025-04-01",
+      "exp_districts": 6,
+      "exp_jichikai": 106,
+      "detected_districts": 6,
+      "detected_jichikai": 106,
+      "total_calc": 52735,
+      "total_html": 52735,
+      "subtotal_warns": 0
+    },
+    {
+      "region_key": "nishi",
+      "ward": "中央区",
+      "url": "https://www.hamajitiren.jp/chiiki/nishi02.html",
+      "asof": "2025-04-01",
+      "exp_districts": 8,
+      "exp_jichikai": 61,
+      "detected_districts": 8,
+      "detected_jichikai": 61,
+      "total_calc": 38507,
+      "total_html": 38507,
+      "subtotal_warns": 0
+    },
+    {
+      "region_key": "minami",
+      "ward": "中央区",
+      "url": "https://www.hamajitiren.jp/chiiki/minami02.html",
+      "asof": "2025-04-01",
+      "exp_districts": 7,
+      "exp_jichikai": 79,
+      "detected_districts": 7,
+      "detected_jichikai": 79,
+      "total_calc": 38360,
+      "total_html": 38360,
+      "subtotal_warns": 0
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "diff_summary": {
+    "added": 0,
+    "removed": 0,
+    "changed": 0,
+    "total_old": 317599,
+    "total_new": 317599,
+    "total_diff": 0,
+    "changed_diff_sum": 0,
+    "out_txt": "C:\\Users\\pirat\\Documents\\MikkabiLab_population_analysis\\fetch\\data\\自治会\\2025\\_DIFF__20251229_170330__to__20251229_170348.txt",
+    "out_csv": "C:\\Users\\pirat\\Documents\\MikkabiLab_population_analysis\\fetch\\data\\自治会\\2025\\_DIFF__20251229_170330__to__20251229_170348.csv"
+  }
+}

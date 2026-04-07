@@ -1,0 +1,15 @@
+==== DIFF REPORT ====
+prev_run_id: 20251229_173421
+curr_run_id: 20260311_201036
+prev_csv   : C:\Users\pirat\Documents\MikkabiLab_population_analysis\data\自治会\archive\2025\runs\20251229_173421\outputs\自治会世帯数__2025.csv
+curr_csv   : C:\Users\pirat\Documents\MikkabiLab_population_analysis\data\自治会\archive\2025\runs\20260311_201036\outputs\自治会世帯数__2025.csv
+
+added_count   : 0
+removed_count : 0
+changed_count : 0
+
+total_households_old : 317599
+total_households_new : 317599
+total_diff           : 0
+changed_diff_sum      : 0
+

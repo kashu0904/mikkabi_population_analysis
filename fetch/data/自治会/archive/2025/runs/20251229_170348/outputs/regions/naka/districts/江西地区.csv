@@ -1,0 +1,11 @@
+﻿ward,region_key,district,jichikai,households,corporate,asof,source_url
+中央区,naka,江西地区,上浅田一丁目,450,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,江西地区,上浅田二丁目,375,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,江西地区,南栄,256,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,江西地区,南浅田,720,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,江西地区,春日町,150,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,江西地区,森田町,285,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,江西地区,浅田町東,370,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,江西地区,海老塚,1600,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,江西地区,神田町,2029,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,江西地区,西浅田,780,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html

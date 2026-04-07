@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='504.00pt' height='360.00pt' viewBox='0 0 504.00 360.00'>
+<g class='svglite'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+    .svglite g.glyphgroup path {
+      fill: inherit;
+      stroke: none;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
+<defs>
+  <clipPath id='cpMC4wMHw1MDQuMDB8MC4wMHwzNjAuMDA='>
+    <rect x='0.00' y='0.00' width='504.00' height='360.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MC4wMHwzNjAuMDA=)'>
+<rect x='0.00' y='0.00' width='504.00' height='360.00' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='52.80' y='35.29' width='431.27' height='273.21' style='stroke-width: 1.07; stroke: none; fill: #E6E6E6;' />
+<polyline points='126.93,308.50 126.93,35.29 ' style='stroke-width: 0.21; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='257.60,308.50 257.60,35.29 ' style='stroke-width: 0.21; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='388.26,308.50 388.26,35.29 ' style='stroke-width: 0.21; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='52.80,296.08 484.07,296.08 ' style='stroke-width: 0.64; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='52.80,275.38 484.07,275.38 ' style='stroke-width: 0.64; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='52.80,254.69 484.07,254.69 ' style='stroke-width: 0.64; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='52.80,233.99 484.07,233.99 ' style='stroke-width: 0.64; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='52.80,213.29 484.07,213.29 ' style='stroke-width: 0.64; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='52.80,192.59 484.07,192.59 ' style='stroke-width: 0.64; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='52.80,171.90 484.07,171.90 ' style='stroke-width: 0.64; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='52.80,151.20 484.07,151.20 ' style='stroke-width: 0.64; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='52.80,130.50 484.07,130.50 ' style='stroke-width: 0.64; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='52.80,109.80 484.07,109.80 ' style='stroke-width: 0.64; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='52.80,89.11 484.07,89.11 ' style='stroke-width: 0.64; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='52.80,68.41 484.07,68.41 ' style='stroke-width: 0.64; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='52.80,47.71 484.07,47.71 ' style='stroke-width: 0.64; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='61.60,308.50 61.60,35.29 ' style='stroke-width: 0.43; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='192.27,308.50 192.27,35.29 ' style='stroke-width: 0.43; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='322.93,308.50 322.93,35.29 ' style='stroke-width: 0.43; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='453.59,308.50 453.59,35.29 ' style='stroke-width: 0.43; stroke: #FFFFFF; stroke-linecap: butt;' />
+<rect x='61.60' y='43.05' width='331.88' height='9.31' style='stroke-width: 0.21; stroke-linecap: butt; stroke-linejoin: miter; fill: #F8766D;' />
+<rect x='61.60' y='63.75' width='308.36' height='9.31' style='stroke-width: 0.21; stroke-linecap: butt; stroke-linejoin: miter; fill: #E18A00;' />
+<rect x='61.60' y='84.45' width='261.32' height='9.31' style='stroke-width: 0.21; stroke-linecap: butt; stroke-linejoin: miter; fill: #BE9C00;' />
+<rect x='61.60' y='105.15' width='260.80' height='9.31' style='stroke-width: 0.21; stroke-linecap: butt; stroke-linejoin: miter; fill: #8CAB00;' />
+<rect x='61.60' y='125.84' width='202.53' height='9.31' style='stroke-width: 0.21; stroke-linecap: butt; stroke-linejoin: miter; fill: #24B700;' />
+<rect x='61.60' y='146.54' width='130.66' height='9.31' style='stroke-width: 0.21; stroke-linecap: butt; stroke-linejoin: miter; fill: #00BE70;' />
+<rect x='61.60' y='167.24' width='109.76' height='9.31' style='stroke-width: 0.21; stroke-linecap: butt; stroke-linejoin: miter; fill: #00C1AB;' />
+<rect x='61.60' y='187.94' width='106.10' height='9.31' style='stroke-width: 0.21; stroke-linecap: butt; stroke-linejoin: miter; fill: #00BBDA;' />
+<rect x='61.60' y='208.63' width='99.30' height='9.31' style='stroke-width: 0.21; stroke-linecap: butt; stroke-linejoin: miter; fill: #00ACFC;' />
+<rect x='61.60' y='229.33' width='94.08' height='9.31' style='stroke-width: 0.21; stroke-linecap: butt; stroke-linejoin: miter; fill: #8B93FF;' />
+<rect x='61.60' y='250.03' width='94.08' height='9.31' style='stroke-width: 0.21; stroke-linecap: butt; stroke-linejoin: miter; fill: #D575FE;' />
+<rect x='61.60' y='270.73' width='92.77' height='9.31' style='stroke-width: 0.21; stroke-linecap: butt; stroke-linejoin: miter; fill: #F962DD;' />
+<rect x='61.60' y='291.43' width='42.33' height='9.31' style='stroke-width: 0.21; stroke-linecap: butt; stroke-linejoin: miter; fill: #FF65AC;' />
+<text x='493.05' y='50.76' text-anchor='middle' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='4.86px' lengthAdjust='spacingAndGlyphs'>1</text>
+<text x='493.05' y='71.46' text-anchor='middle' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='4.86px' lengthAdjust='spacingAndGlyphs'>2</text>
+<text x='493.05' y='92.16' text-anchor='middle' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='4.86px' lengthAdjust='spacingAndGlyphs'>3</text>
+<text x='493.05' y='112.86' text-anchor='middle' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='4.86px' lengthAdjust='spacingAndGlyphs'>4</text>
+<text x='493.05' y='133.55' text-anchor='middle' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='4.86px' lengthAdjust='spacingAndGlyphs'>5</text>
+<text x='493.05' y='154.25' text-anchor='middle' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='4.86px' lengthAdjust='spacingAndGlyphs'>6</text>
+<text x='493.05' y='174.95' text-anchor='middle' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='4.86px' lengthAdjust='spacingAndGlyphs'>7</text>
+<text x='493.05' y='195.65' text-anchor='middle' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='4.86px' lengthAdjust='spacingAndGlyphs'>8</text>
+<text x='493.05' y='216.34' text-anchor='middle' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='4.86px' lengthAdjust='spacingAndGlyphs'>9</text>
+<text x='493.05' y='237.04' text-anchor='middle' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='9.72px' lengthAdjust='spacingAndGlyphs'>10</text>
+<text x='493.05' y='257.74' text-anchor='middle' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='9.72px' lengthAdjust='spacingAndGlyphs'>10</text>
+<text x='493.05' y='278.44' text-anchor='middle' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='9.72px' lengthAdjust='spacingAndGlyphs'>11</text>
+<text x='493.05' y='299.14' text-anchor='middle' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='9.72px' lengthAdjust='spacingAndGlyphs'>12</text>
+<text x='398.60' y='50.76' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='85.19px' lengthAdjust='spacingAndGlyphs'>1,270世帯（15.55%）</text>
+<text x='375.08' y='71.46' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='85.19px' lengthAdjust='spacingAndGlyphs'>1,180世帯（14.45%）</text>
+<text x='328.04' y='92.16' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='85.19px' lengthAdjust='spacingAndGlyphs'>1,000世帯（12.25%）</text>
+<text x='327.06' y='112.86' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='77.64px' lengthAdjust='spacingAndGlyphs'>998世帯（12.22%）</text>
+<text x='268.50' y='133.55' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='72.78px' lengthAdjust='spacingAndGlyphs'>775世帯（9.49%）</text>
+<text x='196.63' y='154.25' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='72.78px' lengthAdjust='spacingAndGlyphs'>500世帯（6.12%）</text>
+<text x='175.73' y='174.95' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='72.78px' lengthAdjust='spacingAndGlyphs'>420世帯（5.14%）</text>
+<text x='172.07' y='195.65' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='72.78px' lengthAdjust='spacingAndGlyphs'>406世帯（4.97%）</text>
+<text x='165.27' y='216.34' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='72.78px' lengthAdjust='spacingAndGlyphs'>380世帯（4.65%）</text>
+<text x='160.05' y='237.04' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='72.78px' lengthAdjust='spacingAndGlyphs'>360世帯（4.41%）</text>
+<text x='160.05' y='257.74' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='72.78px' lengthAdjust='spacingAndGlyphs'>360世帯（4.41%）</text>
+<text x='158.74' y='278.44' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='72.78px' lengthAdjust='spacingAndGlyphs'>355世帯（4.35%）</text>
+<text x='108.30' y='299.14' style='font-size: 8.25px; font-weight: bold; font-family: "Noto Sans JP";' textLength='72.78px' lengthAdjust='spacingAndGlyphs'>162世帯（1.98%）</text>
+<text x='48.33' y='51.08' text-anchor='end' style='font-size: 9.10px; font-weight: bold; font-family: "Noto Sans JP";' textLength='27.28px' lengthAdjust='spacingAndGlyphs'>領家町</text>
+<text x='48.33' y='71.77' text-anchor='end' style='font-size: 9.10px; font-weight: bold; font-family: "Noto Sans JP";' textLength='45.47px' lengthAdjust='spacingAndGlyphs'>中島町本町</text>
+<text x='48.33' y='92.47' text-anchor='end' style='font-size: 9.10px; font-weight: bold; font-family: "Noto Sans JP";' textLength='18.19px' lengthAdjust='spacingAndGlyphs'>向宿</text>
+<text x='48.33' y='113.17' text-anchor='end' style='font-size: 9.10px; font-weight: bold; font-family: "Noto Sans JP";' textLength='45.47px' lengthAdjust='spacingAndGlyphs'>×佐藤中町</text>
+<text x='48.33' y='133.87' text-anchor='end' style='font-size: 9.10px; font-weight: bold; font-family: "Noto Sans JP";' textLength='36.38px' lengthAdjust='spacingAndGlyphs'>佐藤西町</text>
+<text x='48.33' y='154.56' text-anchor='end' style='font-size: 9.10px; font-weight: bold; font-family: "Noto Sans JP";' textLength='36.38px' lengthAdjust='spacingAndGlyphs'>×名塚町</text>
+<text x='48.33' y='175.26' text-anchor='end' style='font-size: 9.10px; font-weight: bold; font-family: "Noto Sans JP";' textLength='45.47px' lengthAdjust='spacingAndGlyphs'>中島町諏訪</text>
+<text x='48.33' y='195.96' text-anchor='end' style='font-size: 9.10px; font-weight: bold; font-family: "Noto Sans JP";' textLength='36.38px' lengthAdjust='spacingAndGlyphs'>佐藤南町</text>
+<text x='48.33' y='216.66' text-anchor='end' style='font-size: 9.10px; font-weight: bold; font-family: "Noto Sans JP";' textLength='36.38px' lengthAdjust='spacingAndGlyphs'>×天神町</text>
+<text x='48.33' y='237.36' text-anchor='end' style='font-size: 9.10px; font-weight: bold; font-family: "Noto Sans JP";' textLength='45.47px' lengthAdjust='spacingAndGlyphs'>中島町市場</text>
+<text x='48.33' y='258.05' text-anchor='end' style='font-size: 9.10px; font-weight: bold; font-family: "Noto Sans JP";' textLength='27.28px' lengthAdjust='spacingAndGlyphs'>相生町</text>
+<text x='48.33' y='278.75' text-anchor='end' style='font-size: 9.10px; font-weight: bold; font-family: "Noto Sans JP";' textLength='27.28px' lengthAdjust='spacingAndGlyphs'>木戸町</text>
+<text x='48.33' y='299.45' text-anchor='end' style='font-size: 9.10px; font-weight: bold; font-family: "Noto Sans JP";' textLength='36.38px' lengthAdjust='spacingAndGlyphs'>×富吉町</text>
+<polyline points='49.81,296.08 52.80,296.08 ' style='stroke-width: 0.64; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='49.81,275.38 52.80,275.38 ' style='stroke-width: 0.64; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='49.81,254.69 52.80,254.69 ' style='stroke-width: 0.64; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='49.81,233.99 52.80,233.99 ' style='stroke-width: 0.64; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='49.81,213.29 52.80,213.29 ' style='stroke-width: 0.64; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='49.81,192.59 52.80,192.59 ' style='stroke-width: 0.64; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='49.81,171.90 52.80,171.90 ' style='stroke-width: 0.64; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='49.81,151.20 52.80,151.20 ' style='stroke-width: 0.64; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='49.81,130.50 52.80,130.50 ' style='stroke-width: 0.64; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='49.81,109.80 52.80,109.80 ' style='stroke-width: 0.64; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='49.81,89.11 52.80,89.11 ' style='stroke-width: 0.64; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='49.81,68.41 52.80,68.41 ' style='stroke-width: 0.64; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='49.81,47.71 52.80,47.71 ' style='stroke-width: 0.64; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='61.60,311.49 61.60,308.50 ' style='stroke-width: 0.43; stroke: #999999; stroke-linecap: butt;' />
+<polyline points='192.27,311.49 192.27,308.50 ' style='stroke-width: 0.43; stroke: #999999; stroke-linecap: butt;' />
+<polyline points='322.93,311.49 322.93,308.50 ' style='stroke-width: 0.43; stroke: #999999; stroke-linecap: butt;' />
+<polyline points='453.59,311.49 453.59,308.50 ' style='stroke-width: 0.43; stroke: #999999; stroke-linecap: butt;' />
+<text x='61.60' y='321.73' text-anchor='middle' style='font-size: 11.00px; font-weight: 350;fill: #666666; font-family: "Noto Sans JP";' textLength='6.03px' lengthAdjust='spacingAndGlyphs'>0</text>
+<text x='192.27' y='321.73' text-anchor='middle' style='font-size: 11.00px; font-weight: 350;fill: #666666; font-family: "Noto Sans JP";' textLength='18.09px' lengthAdjust='spacingAndGlyphs'>500</text>
+<text x='322.93' y='321.73' text-anchor='middle' style='font-size: 11.00px; font-weight: 350;fill: #666666; font-family: "Noto Sans JP";' textLength='24.12px' lengthAdjust='spacingAndGlyphs'>1000</text>
+<text x='453.59' y='321.73' text-anchor='middle' style='font-size: 11.00px; font-weight: 350;fill: #666666; font-family: "Noto Sans JP";' textLength='24.12px' lengthAdjust='spacingAndGlyphs'>1500</text>
+<text x='268.44' y='335.28' text-anchor='middle' style='font-size: 11.00px; font-weight: 350;fill: #666666; font-family: "Noto Sans JP";' textLength='33.00px' lengthAdjust='spacingAndGlyphs'>世帯数</text>
+<text x='52.80' y='26.05' style='font-size: 15.00px; font-weight: bold; font-family: "Noto Sans JP";' textLength='351.06px' lengthAdjust='spacingAndGlyphs'>江東地区（計13自治会）：自治会別 世帯数（降順）</text>
+<text x='494.04' y='350.04' text-anchor='end' style='font-size: 7.15px; font-weight: 350;fill: #4D4D4D; font-family: "Noto Sans JP";' textLength='290.25px' lengthAdjust='spacingAndGlyphs'>出典：浜松市自治連合会「中地域の地区別単位自治会」（令和7年4月1日現在）を基に作成</text>
+</g>
+</g>
+</svg>

@@ -1,0 +1,6 @@
+﻿ward,region_key,district,jichikai,households,corporate,asof,source_url
+中央区,nishi,篠原地区,坪井町,702,False,2025-04-01,https://www.hamajitiren.jp/chiiki/nishi02.html
+中央区,nishi,篠原地区,篠原町東,1703,False,2025-04-01,https://www.hamajitiren.jp/chiiki/nishi02.html
+中央区,nishi,篠原地区,篠原町西,1180,False,2025-04-01,https://www.hamajitiren.jp/chiiki/nishi02.html
+中央区,nishi,篠原地区,馬郡町,864,True,2025-04-01,https://www.hamajitiren.jp/chiiki/nishi02.html
+中央区,nishi,篠原地区,馬郡町舞阪駅前,353,False,2025-04-01,https://www.hamajitiren.jp/chiiki/nishi02.html

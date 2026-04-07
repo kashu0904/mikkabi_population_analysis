@@ -1,0 +1,9 @@
+﻿ward,region_key,district,jichikai,households,corporate,asof,source_url
+中央区,naka,県居地区,元魚町,350,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,県居地区,塩町,195,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,県居地区,平田町,120,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,県居地区,成子町,444,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,県居地区,旅籠町,82,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,県居地区,東伊場,1232,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,県居地区,東菅原町,180,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,県居地区,西菅原町,220,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html

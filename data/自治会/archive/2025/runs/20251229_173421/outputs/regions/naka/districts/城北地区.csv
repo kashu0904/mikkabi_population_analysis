@@ -1,0 +1,16 @@
+﻿ward,region_key,district,jichikai,households,corporate,asof,source_url
+中央区,naka,城北地区,亀山,405,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,城北地区,名残,225,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,城北地区,和地山,1100,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,城北地区,山手町,760,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,城北地区,布橋北,254,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,城北地区,布橋南,954,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,城北地区,広沢,1763,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,城北地区,文丘町,400,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,城北地区,東上池川,980,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,城北地区,蜆塚一区,270,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,城北地区,蜆塚三区,1600,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,城北地区,蜆塚二区,212,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,城北地区,西上池川,850,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,城北地区,追分,570,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,城北地区,高町,469,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html

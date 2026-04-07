@@ -191,7 +191,7 @@ add_unique_jichikai <- function(df) {
     ungroup()
 }
 
-decorate_non_corp <- function(name, corporate, non_corp_mark = "×", mark_non_corporate = TRUE) {
+decorate_non_corp <- function(name, corporate, non_corp_mark = "△", mark_non_corporate = TRUE) {
   name <- as.character(name)
   corporate <- as.logical(corporate)
   if (!isTRUE(mark_non_corporate)) return(name)

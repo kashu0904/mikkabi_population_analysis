@@ -1,0 +1,13 @@
+﻿ward,region_key,district,jichikai,households,corporate,asof,source_url
+中央区,higashi,和田地区,北島町,1525,False,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,和田地区,和田町,1820,False,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,和田地区,天龍川町,1300,False,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,和田地区,安新町,310,True,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,和田地区,安間町,530,True,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,和田地区,材木町,240,True,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,和田地区,篠ヶ瀬町,1700,True,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,和田地区,薬師町,600,True,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,和田地区,薬新団地,39,False,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,和田地区,薬新町,366,True,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,和田地区,長鶴町,350,True,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html
+中央区,higashi,和田地区,龍光町,175,False,2025-04-01,https://www.hamajitiren.jp/chiiki/higashi02.html

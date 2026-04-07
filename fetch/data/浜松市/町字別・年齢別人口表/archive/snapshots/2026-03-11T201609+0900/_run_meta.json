@@ -1,0 +1,61 @@
+{
+  "dataset": "町字別・年齢別人口表",
+  "publisher": "浜松市",
+  "snapshot_id": "2026-03-11T201609+0900",
+  "started_at": "2026-03-11T20:16:09.747478+09:00",
+  "finished_at": "2026-03-11T20:28:45.975117+09:00",
+  "ntp_server_started": "ntp.nict.jp",
+  "ntp_server_finished": "ntp.nict.jp",
+  "elapsed_monotonic_sec": 756.218,
+  "script_name": "download_hamamatsushi_town_tokei_archive.py",
+  "script_sha256": "acd70577fe0ea93c9f27d0e7f58da372c6e284236db8285fc9499bb5b8aae62b",
+  "python_version": "3.10.0 (tags/v3.10.0:b494f59, Oct  4 2021, 19:00:18) [MSC v.1929 64 bit (AMD64)]",
+  "base_urls": [
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/toukeisyo/004_r06-toukeisyo.html",
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/toukeisyo/004_r05-toukeisyo.html",
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/toukeisyo/004_r04-toukeisyo.html",
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/toukeisyo/004_r03-toukeisyo.html",
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/toukeisyo/004_r02-toukeisyo.html",
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/toukeisyo/004_r01-toukeisyo.html",
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/toukeisyo/004_h30-toukeisyo.html",
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/toukeisyo/004_h29-toukeisyo.html",
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/toukeisyo/004_h28-toukeisyo.html",
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/toukeisyo/004_h27-toukeisyo.html",
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/toukeisyo/004_h26-toukeisyo.html",
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/toukeisyo/004_h25-toukeisyo.html",
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/toukeisyo/004_h24-toukeisyo.html",
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/toukeisyo/004_h23toukeisyo.html",
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/toukeisyo/004_h22toukeisyo.html",
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/toukeisyo/004_h21toukeisyo.html",
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/toukeisyo/004_h20toukeisyo.html",
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/toukeisyo/004_h19toukeisyo.html",
+    "https://www.city.hamamatsu.shizuoka.jp/gyousei/library/toukeisyo/004_h18toukeisyo.html"
+  ],
+  "target_exts": [
+    ".xls",
+    ".xlsx"
+  ],
+  "outputs": {
+    "snapshot_root": "C:\\Users\\pirat\\Documents\\MikkabiLab_population_analysis\\fetch\\data\\浜松市\\町字別・年齢別人口表\\archive\\snapshots\\2026-03-11T201609+0900",
+    "manifest_csv": "_manifest_download.csv",
+    "tools_dir": "tools"
+  },
+  "counts_by_era": {
+    "再編前": {
+      "other": 340
+    },
+    "再編後": {
+      "other": 20
+    },
+    "市町村合併前": {},
+    "other": {
+      "other": 20
+    }
+  },
+  "baseline_fixed_counts": {
+    "as_of": "2025-12-15",
+    "scope": "old+before",
+    "expected_fixed_total_old_before": 329,
+    "note": "2025-12-15時点で浜松市HPから取得できた公開ファイル数。以後この件数は変わらない前提で固定検証する。"
+  }
+}

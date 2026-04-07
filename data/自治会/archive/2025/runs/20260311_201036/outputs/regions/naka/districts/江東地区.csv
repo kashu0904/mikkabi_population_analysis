@@ -1,0 +1,14 @@
+﻿ward,region_key,district,jichikai,households,corporate,asof,source_url
+中央区,naka,江東地区,中島町市場,360,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,江東地区,中島町本町,1180,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,江東地区,中島町諏訪,420,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,江東地区,佐藤中町,998,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,江東地区,佐藤南町,406,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,江東地区,佐藤西町,775,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,江東地区,名塚町,500,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,江東地区,向宿,1000,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,江東地区,天神町,380,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,江東地区,富吉町,162,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,江東地区,木戸町,355,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,江東地区,相生町,360,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,江東地区,領家町,1270,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html

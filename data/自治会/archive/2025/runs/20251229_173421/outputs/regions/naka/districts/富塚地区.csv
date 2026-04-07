@@ -1,0 +1,7 @@
+﻿ward,region_key,district,jichikai,households,corporate,asof,source_url
+中央区,naka,富塚地区,富塚町中,1807,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,富塚地区,富塚町北,1507,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,富塚地区,富塚町御前谷,152,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,富塚地区,富塚町東,1750,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,富塚地区,富塚町西,1559,True,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
+中央区,naka,富塚地区,西和,1530,False,2025-04-01,https://www.hamajitiren.jp/chiiki/naka02.html
